@@ -25,6 +25,40 @@
         </section>
 
 <section>
+    <h2>Pesquisar atividades</h2>
+
+    <form>
+        <div>
+            <label for="pesquisa">Nome da atividade:</label>
+            <input type="search" id="pesquisa" name="pesquisa"
+                placeholder="Digite uma atividade">
+        </div>
+
+        <div>
+            <label for="filtro-importancia">Importância:</label>
+            <select id="filtro-importancia" name="importancia">
+                <option value="">Todas</option>
+                <option value="baixa">Baixa</option>
+                <option value="media">Média</option>
+                <option value="alta">Alta</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="ordenacao">Ordenar por:</label>
+            <select id="ordenacao" name="ordenacao">
+                <option value="data">Data</option>
+                <option value="horario">Horário</option>
+                <option value="importancia">Importância</option>
+            </select>
+        </div>
+
+        <button type="submit">Pesquisar</button>
+    </form>
+</section>
+
+
+<section>
     <h2>Minhas atividades</h2>
 
     <article>
