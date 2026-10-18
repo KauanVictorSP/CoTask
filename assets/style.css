@@ -121,3 +121,34 @@ textarea {
 form button {
     margin-top: 5px;
 }
+
+article {
+    border: 1px solid #dce0df;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+article p {
+    margin-bottom: 6px;
+}
+
+article a {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+}
+
+article button {
+    margin: 10px 5px 0 0;
+}
+
+aside {
+    background-color: #eafeea;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+aside ul {
+    padding-left: 20px;
+}
