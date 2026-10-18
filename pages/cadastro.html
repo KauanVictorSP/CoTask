@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar atividade - CoTask</title>
+</head>
+<body>
+
+    <header>
+        <h1>CoTask</h1>
+        <nav>
+            <a href="../index.html">Início</a>
+            <a href="cadastro.html">Cadastrar atividade</a>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h2>Nova atividade</h2>
+            <p>Preencha os dados para organizar sua rotina.</p>
+
+            <form>
+                <div>
+                    <label for="atividade">Nome da atividade:</label>
+                    <input type="text" id="atividade" name="atividade" required>
+                </div>
+
+                <div>
+                    <label for="data">Data:</label>
+                    <input type="date" id="data" name="data" required>
+                </div>
+
+                <div>
+                    <label for="horario">Horário:</label>
+                    <input type="time" id="horario" name="horario" required>
+                </div>
+
+                <div>
+                    <label for="local">Local:</label>
+                    <input type="text" id="local" name="local">
+                </div>
+
+                <div>
+                    <label for="importancia">Importância:</label>
+                    <select id="importancia" name="importancia">
+                        <option value="baixa">Baixa</option>
+                        <option value="media">Média</option>
+                        <option value="alta">Alta</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="pessoas">Pessoas envolvidas:</label>
+                    <input type="text" id="pessoas" name="pessoas"
+                        placeholder="Ex.: joao@email.com">
+                </div>
+
+                <div>
+                    <label for="descricao">Descrição:</label>
+                    <textarea id="descricao" name="descricao"></textarea>
+                </div>
+
+                <a href="../index.html">Cancelar</a>
+                <button type="submit">Cadastrar atividade</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>CoTask - Organize sua rotina</p>
+    </footer>
+
+</body>
+</html>
