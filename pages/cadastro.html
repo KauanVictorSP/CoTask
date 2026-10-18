@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>CoTask - Nova Atividade</title>
+
+    <link rel="stylesheet"
+        href="../assets/css/style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+
+            <h1>CoTask</h1>
+
+            <p>Organize sua rotina</p>
+
+        </div>
+
+        <nav>
+
+            <a href="../index.html">
+                Início
+            </a>
+
+            <a href="cadastro.html">
+                Nova atividade
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <main>
+
+        <section class="form-container">
+
+            <h2>Cadastrar nova atividade</h2>
+
+            <p>
+                Preencha os dados da atividade da sua rotina.
+            </p>
+
+
+            <form>
+
+                <div class="form-group">
+
+                    <label for="atividade">
+                        Nome da atividade
+                    </label>
+
+                    <input
+                        type="text"
+                        id="atividade"
+                        name="atividade"
+                        placeholder="Ex: Estudar programação"
+                        required>
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="data">
+                            Data
+                        </label>
+
+                        <input
+                            type="date"
+                            id="data"
+                            name="data"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="horario">
+                            Horário
+                        </label>
+
+                        <input
+                            type="time"
+                            id="horario"
+                            name="horario"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="local">
+                        Local
+                    </label>
+
+                    <input
+                        type="text"
+                        id="local"
+                        name="local"
+                        placeholder="Ex: Faculdade">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="importancia">
+                        Importância
+                    </label>
+
+                    <select
+                        id="importancia"
+                        name="importancia">
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option value="baixa">
+                            Baixa
+                        </option>
+
+                        <option value="media">
+                            Média
+                        </option>
+
+                        <option value="alta">
+                            Alta
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="pessoas">
+                        Pessoas envolvidas
+                    </label>
+
+                    <input
+                        type="text"
+                        id="pessoas"
+                        name="pessoas"
+                        placeholder="Ex: Joao@email.com">
+
+                    <small>
+                        Informe os e-mails das pessoas que participarão
+                        da atividade.
+                    </small>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="descricao">
+                        Descrição
+                    </label>
+
+                    <textarea
+                        id="descricao"
+                        name="descricao"
+                        placeholder="Descreva a atividade">
+                    </textarea>
+
+                </div>
+
+
+                <div class="form-buttons">
+
+                    <a
+                        href="../index.html"
+                        class="button secondary">
+                        Cancelar
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="button">
+                        Cadastrar atividade
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 CoTask - Gerenciador de Rotinas
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
