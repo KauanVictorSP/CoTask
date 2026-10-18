@@ -152,3 +152,27 @@ aside {
 aside ul {
     padding-left: 20px;
 }
+
+/* Organização dos campos com Grid */
+form {
+    display: grid;
+    gap: 12px;
+}
+
+/* Organização dos botões com Flexbox */
+form button {
+    justify-self: start;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Espaçamento das informações */
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
