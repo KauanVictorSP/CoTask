@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CoTask - Minhas Rotinas</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="logo">
+            <h1>CoTask</h1>
+            <p>Organize sua rotina</p>
+        </div>
+
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="pages/cadastro.html">Nova atividade</a>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <section class="intro">
+
+            <h2>Minhas atividades</h2>
+
+            <p>
+                Organize suas atividades e compartilhe tarefas
+                com outras pessoas.
+            </p>
+
+            <a class="button" href="pages/cadastro.html">
+                Nova atividade
+            </a>
+
+        </section>
+
+
+        <section class="filtros">
+
+            <h2>Pesquisar atividades</h2>
+
+            <form>
+
+                <div>
+                    <label for="pesquisa">Pesquisar</label>
+
+                    <input
+                        type="search"
+                        id="pesquisa"
+                        name="pesquisa"
+                        placeholder="Digite o nome da atividade">
+                </div>
+
+
+                <div>
+                    <label for="importancia">Importância</label>
+
+                    <select id="importancia" name="importancia">
+
+                        <option value="">Todas</option>
+                        <option value="baixa">Baixa</option>
+                        <option value="media">Média</option>
+                        <option value="alta">Alta</option>
+
+                    </select>
+                </div>
+
+
+                <div>
+                    <label for="ordenacao">Ordenar por</label>
+
+                    <select id="ordenacao" name="ordenacao">
+
+                        <option value="horario">Horário</option>
+                        <option value="importancia">Importância</option>
+                        <option value="nome">Nome</option>
+
+                    </select>
+                </div>
+
+                <button type="submit">
+                    Pesquisar
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <section class="atividades">
+
+            <h2>Atividades de hoje</h2>
+
+
+            <article class="atividade">
+
+                <div class="atividade-info">
+
+                    <h3>Estudar programação</h3>
+
+                    <p>
+                        <strong>Horário:</strong>
+                        14:00
+                    </p>
+
+                    <p>
+                        <strong>Local:</strong>
+                        Faculdade
+                    </p>
+
+                    <p>
+                        <strong>Importância:</strong>
+                        Alta
+                    </p>
+
+                    <p>
+                        <strong>Pessoas envolvidas:</strong>
+                        Kauan e João
+                    </p>
+
+                </div>
+
+                <div class="atividade-acoes">
+
+                    <a href="pages/detalhes.html">
+                        Ver detalhes
+                    </a>
+
+                    <button type="button">
+                        Editar
+                    </button>
+
+                    <button type="button">
+                        Excluir
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <article class="atividade">
+
+                <div class="atividade-info">
+
+                    <h3>Fazer trabalho da faculdade</h3>
+
+                    <p>
+                        <strong>Horário:</strong>
+                        19:00
+                    </p>
+
+                    <p>
+                        <strong>Local:</strong>
+                        Casa
+                    </p>
+
+                    <p>
+                        <strong>Importância:</strong>
+                        Média
+                    </p>
+
+                    <p>
+                        <strong>Pessoas envolvidas:</strong>
+                        Kauan, Maria e Pedro
+                    </p>
+
+                </div>
+
+                <div class="atividade-acoes">
+
+                    <a href="pages/detalhes.html">
+                        Ver detalhes
+                    </a>
+
+                    <button type="button">
+                        Editar
+                    </button>
+
+                    <button type="button">
+                        Excluir
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <article class="atividade">
+
+                <div class="atividade-info">
+
+                    <h3>Academia</h3>
+
+                    <p>
+                        <strong>Horário:</strong>
+                        21:00
+                    </p>
+
+                    <p>
+                        <strong>Local:</strong>
+                        Academia
+                    </p>
+
+                    <p>
+                        <strong>Importância:</strong>
+                        Baixa
+                    </p>
+
+                    <p>
+                        <strong>Pessoas envolvidas:</strong>
+                        Somente eu
+                    </p>
+
+                </div>
+
+                <div class="atividade-acoes">
+
+                    <a href="pages/detalhes.html">
+                        Ver detalhes
+                    </a>
+
+                    <button type="button">
+                        Editar
+                    </button>
+
+                    <button type="button">
+                        Excluir
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            © 2026 CoTask - Gerenciador de Rotinas
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
