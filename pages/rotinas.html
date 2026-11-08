@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CoTask - Minhas Rotinas</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/rotina.css">
+    <script src="../js/rotinas.js" defer></script>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header class="topo">
+
+        <div class="logo">
+            <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
+            <span>CoTask</span>
+        </div>
+
+        <div class="usuario">
+            <span id="nome-usuario">Olá!</span>
+            <button id="botao-sair">Sair</button>
+        </div>
+
+    </header>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="conteudo">
+
+        <!-- MENU LATERAL -->
+        <aside class="menu-lateral">
+
+            <h2>Menu</h2>
+
+            <nav>
+                <a href="#" class="menu-ativo">Minhas rotinas</a>
+                <a href="#">Calendário</a>
+                <a href="#">Todas as atividades</a>
+            </nav>
+
+            <button id="botao-nova-rotina">
+                + Nova rotina
+            </button>
+
+        </aside>
+
+        <!-- ÁREA PRINCIPAL -->
+        <section class="area-rotinas">
+
+            <div class="titulo-pagina">
+                <div>
+                    <h1>Minhas rotinas</h1>
+                    <p>Organize suas tarefas e acompanhe seu progresso.</p>
+                </div>
+            </div>
+
+            <!-- CALENDÁRIO -->
+            <section class="calendario">
+
+                <div class="calendario-cabecalho">
+                    <button id="mes-anterior">&lt;</button>
+
+                    <h2 id="mes-atual">Novembro 2026</h2>
+
+                    <button id="proximo-mes">&gt;</button>
+                </div>
+
+                <div class="dias-semana">
+                    <span>Dom</span>
+                    <span>Seg</span>
+                    <span>Ter</span>
+                    <span>Qua</span>
+                    <span>Qui</span>
+                    <span>Sex</span>
+                    <span>Sáb</span>
+                </div>
+
+                <div id="dias-calendario" class="dias-calendario">
+                    <!-- Os dias serão criados pelo JavaScript -->
+                </div>
+
+            </section>
+
+            <!-- ATIVIDADES -->
+            <section class="atividades">
+
+                <div class="atividades-cabecalho">
+                    <h2>Atividades de <span id="data-selecionada"></span></h2>
+
+                    <button id="botao-adicionar-atividade">
+                        + Adicionar atividade
+                    </button>
+                    
+                    <!-- FORMULÁRIO DE NOVA ATIVIDADE -->
+
+                    <form id="form-atividade" class="form-atividade" hidden>
+
+                        <h3>Nova atividade</h3>
+
+                        <label for="titulo-atividade">Título</label>
+                        <input
+                            type="text"
+                            id="titulo-atividade"
+                            placeholder="Ex: Estudar JavaScript"
+                            required
+                        >
+
+                        <label for="descricao-atividade">Descrição</label>
+                        <textarea
+                            id="descricao-atividade"
+                            placeholder="Descreva sua atividade..."
+                            rows="3"
+                        ></textarea>
+
+                        <label for="horario-atividade">Horário</label>
+                        <input
+                            type="time"
+                            id="horario-atividade"
+                            required
+                        >
+
+                        <div class="botoes-formulario">
+                            <button type="submit">Salvar atividade</button>
+                            <button type="button" id="cancelar-atividade">Cancelar</button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div id="lista-atividades">
+
+                    <p class="mensagem-vazia">
+                        Selecione um dia no calendário para visualizar suas atividades.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
