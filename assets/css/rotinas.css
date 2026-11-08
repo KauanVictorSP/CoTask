@@ -24,6 +24,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Cyber Brush";
+    src: url("../fonts/Cyber Brush.ttf") format("opentype");
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* ==================================================
    VARIÁVEIS GLOBAIS
 ================================================== */
@@ -430,7 +437,7 @@ a {
 
     color: var(--cyan);
 
-    font-family: "Cyberthic", sans-serif;
+    font-family: "Cyber Brush", sans-serif;
     font-size: 22px;
     font-weight: normal;
 
