@@ -1330,3 +1330,38 @@ button {
     color: var(--white);
     background: #080B16;
 }
+
+/* =====================================
+   ORDENAÇÃO DE ATIVIDADES
+===================================== */
+
+#ordenacao-atividades {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+
+    padding: 14px 18px;
+
+    color: var(--white);
+    background: rgba(8, 11, 22, 0.9);
+
+    border: 1px solid rgba(25, 230, 242, 0.35);
+    border-radius: 8px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 15px;
+
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#ordenacao-atividades:focus {
+    outline: none;
+    border-color: var(--cyan);
+    box-shadow: 0 0 15px rgba(25, 230, 242, 0.15);
+}
+
+#ordenacao-atividades option {
+    color: var(--white);
+    background: #080B16;
+}

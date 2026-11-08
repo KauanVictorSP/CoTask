@@ -128,6 +128,12 @@ const botaoFecharModal = document.getElementById("fechar-modal");
 
 const dataAtividade = document.getElementById("data-atividade");
 
+const tituloAtividade = document.getElementById("titulo-atividade");
+const descricaoAtividade = document.getElementById("descricao-atividade");
+const horarioAtividade = document.getElementById("horario-atividade");
+
+let atividadeEditandoId = null;
+
 // =====================================
 // ABRIR FORMULÁRIO
 // =====================================
@@ -222,6 +228,7 @@ listaAtividades.parentElement.insertBefore(
 campoPesquisa.addEventListener("input", () => {
     mostrarAtividades();
 });
+
 // =====================================
 // FILTRO DE ATIVIDADES
 // =====================================
@@ -249,11 +256,31 @@ campoFiltro.addEventListener("change", () => {
     mostrarAtividades();
 });
 
-const tituloAtividade = document.getElementById("titulo-atividade");
-const descricaoAtividade = document.getElementById("descricao-atividade");
-const horarioAtividade = document.getElementById("horario-atividade");
+// =====================================
+// ORDENAÇÃO DE ATIVIDADES
+// =====================================
 
-let atividadeEditandoId = null;
+const campoOrdenacao = document.createElement("select");
+
+campoOrdenacao.id = "ordenacao-atividades";
+
+campoOrdenacao.innerHTML = `
+    <option value="crescente">Mais cedo primeiro</option>
+    <option value="decrescente">Mais tarde primeiro</option>
+`;
+
+campoOrdenacao.setAttribute("aria-label", "Ordenar atividades");
+
+listaAtividades.parentElement.insertBefore(
+    campoOrdenacao,
+    listaAtividades
+);
+
+// Atualizar a lista ao trocar a ordenação
+
+campoOrdenacao.addEventListener("change", () => {
+    mostrarAtividades();
+});
 
 // =====================================
 // CARREGAR ATIVIDADES
@@ -276,31 +303,69 @@ function mostrarAtividades() {
         String(dataSelecionada.getDate()).padStart(2, "0")
     ].join("-");
 
-    // Filtrar atividades da data selecionada
+    // =====================================
+    // PESQUISAR E FILTRAR ATIVIDADES
+    // =====================================
 
     const termoPesquisa = campoPesquisa.value.trim().toLowerCase();
-const tipoFiltro = campoFiltro.value;
+    const tipoFiltro = campoFiltro.value;
 
-const atividadesDoDia = atividades.filter((atividade) => {
-    const mesmaData = atividade.data === dataFormatada;
+    const atividadesDoDia = atividades.filter((atividade) => {
+        const mesmaData = atividade.data === dataFormatada;
 
-    const titulo = atividade.titulo.toLowerCase();
-    const descricao = (atividade.descricao || "").toLowerCase();
+        const titulo = (atividade.titulo || "").toLowerCase();
+        const descricao = (atividade.descricao || "").toLowerCase();
 
-    const correspondePesquisa =
-        titulo.includes(termoPesquisa) ||
-        descricao.includes(termoPesquisa);
+        const correspondePesquisa =
+            titulo.includes(termoPesquisa) ||
+            descricao.includes(termoPesquisa);
 
-    const correspondeFiltro =
-        tipoFiltro === "todas" ||
-        (tipoFiltro === "pendentes" && !atividade.concluida) ||
-        (tipoFiltro === "concluidas" && atividade.concluida);
+        const correspondeFiltro =
+            tipoFiltro === "todas" ||
+            (tipoFiltro === "pendentes" && atividade.concluida !== true) ||
+            (tipoFiltro === "concluidas" && atividade.concluida === true);
 
-    return mesmaData && correspondePesquisa && correspondeFiltro;
-});
+        return mesmaData && correspondePesquisa && correspondeFiltro;
+    });
+
+    // =====================================
+    // ORDENAR ATIVIDADES POR HORÁRIO
+    // =====================================
+
+    atividadesDoDia.sort((atividadeA, atividadeB) => {
+        const horarioA = atividadeA.horario || "";
+        const horarioB = atividadeB.horario || "";
+
+        // Atividades sem horário ficam no final
+
+        if (!horarioA && !horarioB) return 0;
+        if (!horarioA) return 1;
+        if (!horarioB) return -1;
+
+        // Converter horários em minutos
+
+        const [horaA, minutoA] = horarioA.split(":").map(Number);
+        const [horaB, minutoB] = horarioB.split(":").map(Number);
+
+        const minutosA = horaA * 60 + minutoA;
+        const minutosB = horaB * 60 + minutoB;
+
+        // Ordenar conforme a opção selecionada
+
+        if (campoOrdenacao.value === "crescente") {
+            return minutosA - minutosB;
+        }
+
+        return minutosB - minutosA;
+    });
+
+    // Limpar a listagem anterior
+
     listaAtividades.innerHTML = "";
 
-    // Mensagem quando não existem atividades
+    // =====================================
+    // MENSAGEM QUANDO NÃO EXISTEM ATIVIDADES
+    // =====================================
 
     if (atividadesDoDia.length === 0) {
         const mensagem = document.createElement("p");
@@ -313,7 +378,9 @@ const atividadesDoDia = atividades.filter((atividade) => {
         return;
     }
 
-    // Criar os cards das atividades
+    // =====================================
+    // CRIAR OS CARDS DAS ATIVIDADES
+    // =====================================
 
     atividadesDoDia.forEach((atividade) => {
         const card = document.createElement("div");
@@ -322,7 +389,7 @@ const atividadesDoDia = atividades.filter((atividade) => {
 
         // Verificar se a atividade foi concluída
 
-        if (atividade.concluida) {
+        if (atividade.concluida === true) {
             card.classList.add("concluida");
         }
 
@@ -350,7 +417,7 @@ const atividadesDoDia = atividades.filter((atividade) => {
 
         status.classList.add("status-missao");
 
-        status.textContent = atividade.concluida
+        status.textContent = atividade.concluida === true
             ? "CONCLUÍDA"
             : "PENDENTE";
 
@@ -363,7 +430,7 @@ const atividadesDoDia = atividades.filter((atividade) => {
         botaoStatus.type = "button";
         botaoStatus.classList.add("botao-status");
 
-        botaoStatus.textContent = atividade.concluida
+        botaoStatus.textContent = atividade.concluida === true
             ? "Reabrir missão"
             : "Concluir missão";
 
@@ -400,9 +467,9 @@ const atividadesDoDia = atividades.filter((atividade) => {
             atividadeEditandoId = atividade.id;
 
             tituloAtividade.value = atividade.titulo;
-            descricaoAtividade.value = atividade.descricao;
+            descricaoAtividade.value = atividade.descricao || "";
             dataAtividade.value = atividade.data;
-            horarioAtividade.value = atividade.horario;
+            horarioAtividade.value = atividade.horario || "";
 
             document.querySelector("#form-atividade h3").textContent = "Editar missão";
 
@@ -410,6 +477,7 @@ const atividadesDoDia = atividades.filter((atividade) => {
 
             modalAtividade.hidden = false;
         });
+
         // =====================================
         // BOTÃO EXCLUIR
         // =====================================
@@ -431,10 +499,14 @@ const atividadesDoDia = atividades.filter((atividade) => {
                 return item.id !== atividade.id;
             });
 
-            localStorage.setItem("atividades", JSON.stringify(novaLista));
+            localStorage.setItem(
+                "atividades",
+                JSON.stringify(novaLista)
+            );
 
             mostrarAtividades();
         });
+
         // =====================================
         // ORGANIZAR CARD E BOTÕES
         // =====================================
@@ -513,28 +585,3 @@ formularioAtividade.addEventListener("submit", (evento) => {
 // =====================================
 
 mostrarAtividades();
-
-// =====================================
-// PESQUISAR E FILTRAR ATIVIDADES
-// =====================================
-
-const termoPesquisa = campoPesquisa.value.trim().toLowerCase();
-const tipoFiltro = campoFiltro.value;
-
-const atividadesDoDia = atividades.filter((atividade) => {
-    const mesmaData = atividade.data === dataFormatada;
-
-    const titulo = (atividade.titulo || "").toLowerCase();
-    const descricao = (atividade.descricao || "").toLowerCase();
-
-    const correspondePesquisa =
-        titulo.includes(termoPesquisa) ||
-        descricao.includes(termoPesquisa);
-
-    const correspondeFiltro =
-        tipoFiltro === "todas" ||
-        (tipoFiltro === "pendentes" && atividade.concluida !== true) ||
-        (tipoFiltro === "concluidas" && atividade.concluida === true);
-
-    return mesmaData && correspondePesquisa && correspondeFiltro;
-});
