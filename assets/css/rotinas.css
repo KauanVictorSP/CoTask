@@ -1582,3 +1582,45 @@ button {
     background: rgba(25, 230, 242, 0.15);
     box-shadow: 0 0 15px rgba(25, 230, 242, 0.2);
 }
+
+/* =====================================
+   LEGENDA DO CALENDÁRIO
+===================================== */
+
+.legenda-calendario {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-top: 22px;
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 12px;
+}
+
+.legenda-cor {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border-radius: 3px;
+}
+
+.legenda-cor.dia-normal {
+    background: var(--muted);
+}
+
+.legenda-cor.dia-selecionado {
+    background: var(--cyan);
+    box-shadow: 0 0 8px rgba(25, 230, 242, 0.5);
+}
+
+.legenda-cor.dia-feriado {
+    background: var(--pink);
+    box-shadow: 0 0 8px rgba(255, 70, 150, 0.5);
+}
