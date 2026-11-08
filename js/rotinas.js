@@ -222,6 +222,32 @@ listaAtividades.parentElement.insertBefore(
 campoPesquisa.addEventListener("input", () => {
     mostrarAtividades();
 });
+// =====================================
+// FILTRO DE ATIVIDADES
+// =====================================
+
+const campoFiltro = document.createElement("select");
+
+campoFiltro.id = "filtro-atividades";
+
+campoFiltro.innerHTML = `
+    <option value="todas">Todas as missões</option>
+    <option value="pendentes">Pendentes</option>
+    <option value="concluidas">Concluídas</option>
+`;
+
+campoFiltro.setAttribute("aria-label", "Filtrar atividades");
+
+listaAtividades.parentElement.insertBefore(
+    campoFiltro,
+    listaAtividades
+);
+
+// Atualizar a lista ao trocar o filtro
+
+campoFiltro.addEventListener("change", () => {
+    mostrarAtividades();
+});
 
 const tituloAtividade = document.getElementById("titulo-atividade");
 const descricaoAtividade = document.getElementById("descricao-atividade");
@@ -253,6 +279,7 @@ function mostrarAtividades() {
     // Filtrar atividades da data selecionada
 
     const termoPesquisa = campoPesquisa.value.trim().toLowerCase();
+const tipoFiltro = campoFiltro.value;
 
 const atividadesDoDia = atividades.filter((atividade) => {
     const mesmaData = atividade.data === dataFormatada;
@@ -264,9 +291,13 @@ const atividadesDoDia = atividades.filter((atividade) => {
         titulo.includes(termoPesquisa) ||
         descricao.includes(termoPesquisa);
 
-    return mesmaData && correspondePesquisa;
-});
+    const correspondeFiltro =
+        tipoFiltro === "todas" ||
+        (tipoFiltro === "pendentes" && !atividade.concluida) ||
+        (tipoFiltro === "concluidas" && atividade.concluida);
 
+    return mesmaData && correspondePesquisa && correspondeFiltro;
+});
     listaAtividades.innerHTML = "";
 
     // Mensagem quando não existem atividades
@@ -482,3 +513,28 @@ formularioAtividade.addEventListener("submit", (evento) => {
 // =====================================
 
 mostrarAtividades();
+
+// =====================================
+// PESQUISAR E FILTRAR ATIVIDADES
+// =====================================
+
+const termoPesquisa = campoPesquisa.value.trim().toLowerCase();
+const tipoFiltro = campoFiltro.value;
+
+const atividadesDoDia = atividades.filter((atividade) => {
+    const mesmaData = atividade.data === dataFormatada;
+
+    const titulo = (atividade.titulo || "").toLowerCase();
+    const descricao = (atividade.descricao || "").toLowerCase();
+
+    const correspondePesquisa =
+        titulo.includes(termoPesquisa) ||
+        descricao.includes(termoPesquisa);
+
+    const correspondeFiltro =
+        tipoFiltro === "todas" ||
+        (tipoFiltro === "pendentes" && atividade.concluida !== true) ||
+        (tipoFiltro === "concluidas" && atividade.concluida === true);
+
+    return mesmaData && correspondePesquisa && correspondeFiltro;
+});

@@ -1295,3 +1295,38 @@ button {
 
     box-shadow: 0 0 15px rgba(25, 230, 242, 0.15);
 }
+
+/* =====================================
+   FILTRO DE ATIVIDADES
+===================================== */
+
+#filtro-atividades {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+
+    padding: 14px 18px;
+
+    color: var(--white);
+    background: rgba(8, 11, 22, 0.9);
+
+    border: 1px solid rgba(176, 92, 255, 0.4);
+    border-radius: 8px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 15px;
+
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+#filtro-atividades:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 15px rgba(176, 92, 255, 0.15);
+}
+
+#filtro-atividades option {
+    color: var(--white);
+    background: #080B16;
+}
