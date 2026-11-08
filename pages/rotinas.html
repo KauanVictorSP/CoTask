@@ -9,7 +9,7 @@
     <title>CoTask - Minhas Rotinas</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/rotina.css">
+    <link rel="stylesheet" href="../assets/css/rotinas.css">
     <script src="../js/rotinas.js" defer></script>
 </head>
 
@@ -44,8 +44,8 @@
                 <a href="#">Todas as atividades</a>
             </nav>
 
-            <button id="botao-nova-rotina">
-                + Nova rotina
+            <button id="botao-nova-atividade">
+                + Nova atividade
             </button>
 
         </aside>
@@ -96,41 +96,8 @@
                     <button id="botao-adicionar-atividade">
                         + Adicionar atividade
                     </button>
-                    
-                    <!-- FORMULÁRIO DE NOVA ATIVIDADE -->
 
-                    <form id="form-atividade" class="form-atividade" hidden>
-
-                        <h3>Nova atividade</h3>
-
-                        <label for="titulo-atividade">Título</label>
-                        <input
-                            type="text"
-                            id="titulo-atividade"
-                            placeholder="Ex: Estudar JavaScript"
-                            required
-                        >
-
-                        <label for="descricao-atividade">Descrição</label>
-                        <textarea
-                            id="descricao-atividade"
-                            placeholder="Descreva sua atividade..."
-                            rows="3"
-                        ></textarea>
-
-                        <label for="horario-atividade">Horário</label>
-                        <input
-                            type="time"
-                            id="horario-atividade"
-                            required
-                        >
-
-                        <div class="botoes-formulario">
-                            <button type="submit">Salvar atividade</button>
-                            <button type="button" id="cancelar-atividade">Cancelar</button>
-                        </div>
-
-                    </form>
+            
 
                 </div>
 
@@ -147,6 +114,58 @@
         </section>
 
     </main>
+    <!-- MODAL DE NOVA ATIVIDADE -->
+<div id="modal-atividade" class="modal-atividade" hidden>
+
+    <div class="conteudo-modal">
+
+        <button type="button" id="fechar-modal" class="fechar-modal">
+            &times;
+        </button>
+
+        <form id="form-atividade" class="form-atividade">
+
+            <h3>Nova atividade</h3>
+
+            <label for="titulo-atividade">Título</label>
+            <input
+                type="text"
+                id="titulo-atividade"
+                placeholder="Ex: Estudar JavaScript"
+                required
+            >
+
+            <label for="descricao-atividade">Descrição</label>
+            <textarea
+                id="descricao-atividade"
+                placeholder="Descreva sua atividade..."
+                rows="3"
+            ></textarea>
+
+            <label for="data-atividade">Data da atividade</label>
+            <input
+                type="date"
+                id="data-atividade"
+                required
+            >
+
+            <label for="horario-atividade">Horário</label>
+            <input
+                type="time"
+                id="horario-atividade"
+                required
+            >
+
+            <div class="botoes-formulario">
+                <button type="submit">Salvar atividade</button>
+                <button type="button" id="cancelar-atividade">Cancelar</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>
