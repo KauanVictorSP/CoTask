@@ -1261,3 +1261,37 @@ button {
     background: #FF526B;
     box-shadow: 0 0 15px rgba(255, 82, 107, 0.3);
 }
+
+/* =====================================
+   PESQUISA DE ATIVIDADES
+===================================== */
+
+#pesquisa-atividades {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+
+    padding: 14px 18px;
+
+    color: var(--white);
+    background: rgba(8, 11, 22, 0.9);
+
+    border: 1px solid rgba(25, 230, 242, 0.35);
+    border-radius: 8px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 15px;
+
+    transition: 0.25s ease;
+}
+
+#pesquisa-atividades::placeholder {
+    color: var(--muted);
+}
+
+#pesquisa-atividades:focus {
+    outline: none;
+    border-color: var(--cyan);
+
+    box-shadow: 0 0 15px rgba(25, 230, 242, 0.15);
+}

@@ -201,6 +201,28 @@ document.addEventListener("keydown", (evento) => {
 
 const listaAtividades = document.getElementById("lista-atividades");
 
+// =====================================
+// PESQUISA DE ATIVIDADES
+// =====================================
+
+const campoPesquisa = document.createElement("input");
+
+campoPesquisa.type = "search";
+campoPesquisa.id = "pesquisa-atividades";
+campoPesquisa.placeholder = "Pesquisar missão...";
+campoPesquisa.setAttribute("aria-label", "Pesquisar atividades");
+
+listaAtividades.parentElement.insertBefore(
+    campoPesquisa,
+    listaAtividades
+);
+
+// Atualizar a lista enquanto digita
+
+campoPesquisa.addEventListener("input", () => {
+    mostrarAtividades();
+});
+
 const tituloAtividade = document.getElementById("titulo-atividade");
 const descricaoAtividade = document.getElementById("descricao-atividade");
 const horarioAtividade = document.getElementById("horario-atividade");
@@ -230,9 +252,20 @@ function mostrarAtividades() {
 
     // Filtrar atividades da data selecionada
 
-    const atividadesDoDia = atividades.filter((atividade) => {
-        return atividade.data === dataFormatada;
-    });
+    const termoPesquisa = campoPesquisa.value.trim().toLowerCase();
+
+const atividadesDoDia = atividades.filter((atividade) => {
+    const mesmaData = atividade.data === dataFormatada;
+
+    const titulo = atividade.titulo.toLowerCase();
+    const descricao = (atividade.descricao || "").toLowerCase();
+
+    const correspondePesquisa =
+        titulo.includes(termoPesquisa) ||
+        descricao.includes(termoPesquisa);
+
+    return mesmaData && correspondePesquisa;
+});
 
     listaAtividades.innerHTML = "";
 
