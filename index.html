@@ -4,109 +4,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CoTask - Minha Rotina</title>
-    <link rel="stylesheet" href="assets/style.css">
+    <meta name="theme-color" content="#0B0B14">
+
+    <title>CoTask - Sua rotina, seu sistema</title>
+
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="js/script.js" defer></script>
 </head>
+
 <body>
 
-    <header>
-        <h1>CoTask</h1>
-        <p>Organize sua rotina</p>
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
 
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="pages/cadastro.html">Cadastrar atividade</a>
+    <header class="site-header">
+
+        <a href="index.html" class="brand">
+            <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
+            <span>CoTask</span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#inicio" class="nav-link">Início</a>
+            <a href="#sobre" class="nav-link">Sobre</a>
+
+            <button class="button button-ghost" id="open-login" type="button">
+                Entrar
+            </button>
+
+            <button class="button button-primary" id="open-register" type="button">
+                Criar conta
+            </button>
         </nav>
+
     </header>
 
     <main>
-        <section>
-            <h2>Bem-vindo ao CoTask</h2>
-            <p>Organize suas atividades e compartilhe sua rotina com outras pessoas.</p>
+
+        <section class="hero" id="inicio">
+
+            <div class="hero-copy">
+
+                <span class="eyebrow">
+                    <span class="status-dot"></span>
+                    SEU TEMPO. SEU SISTEMA.
+                </span>
+
+                <h1>
+                    Organize sua rotina.
+                    <br>
+                    <span>Assuma o controle.</span>
+                </h1>
+
+                <p class="hero-description">
+                    Planeje atividades, acompanhe seus compromissos
+                    e mantenha todo mundo na mesma sintonia.
+                    Sua rotina merece um sistema à altura.
+                </p>
+
+                <div class="hero-actions">
+
+                    <button
+                        class="button button-primary button-large"
+                        id="hero-register"
+                        type="button">
+
+                        Começar agora <span>↗</span>
+
+                    </button>
+
+                    <button
+                        class="button button-outline button-large"
+                        id="hero-login"
+                        type="button">
+
+                        Já tenho uma conta
+
+                    </button>
+
+                </div>
+
+                <div class="hero-note">
+                    <span class="note-line"></span>
+                    Menos caos. Mais foco. Mais tempo para você.
+                </div>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="visual-ring ring-outer"></div>
+                <div class="visual-ring ring-inner"></div>
+                <div class="logo-halo"></div>
+
+                <img
+                    class="hero-logo"
+                    src="../assets/imagens/logo-cotask.png"
+                    alt="Símbolo do CoTask">
+
+                <div class="floating-chip chip-top">
+                    <span class="chip-icon">✦</span>
+                    ROTINA EM SINTONIA
+                </div>
+
+                <div class="floating-chip chip-bottom">
+                    <span class="chip-dot"></span>
+                    SISTEMA PRONTO
+                </div>
+
+            </div>
+
         </section>
 
-<section>
-    <h2>Pesquisar atividades</h2>
+        <section class="feature-strip" id="sobre">
 
-    <form>
-        <div>
-            <label for="pesquisa">Nome da atividade:</label>
-            <input type="search" id="pesquisa" name="pesquisa"
-                placeholder="Digite uma atividade">
-        </div>
+            <article class="feature-card">
+                <span class="feature-number">01</span>
 
-        <div>
-            <label for="filtro-importancia">Importância:</label>
-            <select id="filtro-importancia" name="importancia">
-                <option value="">Todas</option>
-                <option value="baixa">Baixa</option>
-                <option value="media">Média</option>
-                <option value="alta">Alta</option>
-            </select>
-        </div>
+                <div>
+                    <h2>Planeje</h2>
+                    <p>
+                        Organize seus compromissos em um só lugar.
+                    </p>
+                </div>
+            </article>
 
-        <div>
-            <label for="ordenacao">Ordenar por:</label>
-            <select id="ordenacao" name="ordenacao">
-                <option value="data">Data</option>
-                <option value="horario">Horário</option>
-                <option value="importancia">Importância</option>
-            </select>
-        </div>
+            <article class="feature-card">
+                <span class="feature-number pink">02</span>
 
-        <button type="submit">Pesquisar</button>
-    </form>
-</section>
+                <div>
+                    <h2>Acompanhe</h2>
+                    <p>
+                        Visualize sua rotina com clareza pelo calendário.
+                    </p>
+                </div>
+            </article>
 
+            <article class="feature-card">
+                <span class="feature-number purple">03</span>
 
-<section>
-    <h2>Minhas atividades</h2>
+                <div>
+                    <h2>Compartilhe</h2>
+                    <p>
+                        Mantenha os participantes informados.
+                    </p>
+                </div>
+            </article>
 
-    <article>
-        <h3>Estudar programação</h3>
-        <p>Data: 20/10/2026</p>
-        <p>Horário: 14:00</p>
-        <p>Local: Faculdade</p>
-        <p>Importância: Alta</p>
-        <p>Pessoas: Kauan e João</p>
-
-        <a href="pages/detalhes.html">Ver detalhes</a>
-        <button type="button">Editar</button>
-        <button type="button">Excluir</button>
-    </article>
-
-    <article>
-        <h3>Fazer trabalho da faculdade</h3>
-        <p>Data: 21/10/2026</p>
-        <p>Horário: 19:00</p>
-        <p>Local: Casa</p>
-        <p>Importância: Média</p>
-        <p>Pessoas: Kauan, Maria e Pedro</p>
-
-        <a href="pages/detalhes.html">Ver detalhes</a>
-        <button type="button">Editar</button>
-        <button type="button">Excluir</button>
-    </article>
-
-    <article>
-        <h3>Academia</h3>
-        <p>Data: 22/10/2026</p>
-        <p>Horário: 21:00</p>
-        <p>Local: Academia</p>
-        <p>Importância: Baixa</p>
-        <p>Pessoas: Somente eu</p>
-
-        <a href="pages/detalhes.html">Ver detalhes</a>
-        <button type="button">Editar</button>
-        <button type="button">Excluir</button>
-    </article>
-</section>
+        </section>
 
     </main>
 
-    <footer>
-        <p>CoTask - Organize sua rotina</p>
+    <footer class="site-footer">
+        <span>© 2026 CoTask</span>
+        <span>YOUR TIME. YOUR SYSTEM.</span>
     </footer>
+
+
+    <!-- JANELA DE LOGIN E CADASTRO -->
+
+    <div class="modal-backdrop" id="auth-modal" aria-hidden="true">
+
+        <section
+            class="auth-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-title">
+
+            <button
+                class="modal-close"
+                id="close-modal"
+                type="button"
+                aria-label="Fechar">
+
+                ×
+
+            </button>
+
+            <div class="modal-brand">
+
+                <img src="../assets/imagens/logo-cotask.png" alt="">
+
+                <span>CoTask</span>
+
+            </div>
+
+
+            <!-- CADASTRO -->
+
+            <div id="register-panel">
+
+                <span class="modal-kicker">NOVO POR AQUI?</span>
+
+                <h2 id="modal-title">
+                    Crie sua conta<span>.</span>
+                </h2>
+
+                <p class="modal-description">
+                    Comece a organizar seu tempo com o CoTask.
+                </p>
+
+                <form id="register-form">
+
+                    <label for="register-name">Nome</label>
+
+                    <input
+                        id="register-name"
+                        name="name"
+                        type="text"
+                        placeholder="Como podemos te chamar?"
+                        autocomplete="name"
+                        required>
+
+                    <label for="register-email">E-mail</label>
+
+                    <input
+                        id="register-email"
+                        name="email"
+                        type="email"
+                        placeholder="voce@email.com"
+                        autocomplete="email"
+                        required>
+
+                    <label for="register-password">Senha</label>
+
+                    <input
+                        id="register-password"
+                        name="password"
+                        type="password"
+                        placeholder="Mínimo de 8 caracteres"
+                        minlength="8"
+                        autocomplete="new-password"
+                        required>
+
+                        <label for="register-confirm-password">Confirmar senha</label>
+
+                        <input
+                            id="register-confirm-password"
+                            name="confirm-password"
+                            type="password"
+                            placeholder="Digite sua senha novamente"
+                            minlength="6"
+                            autocomplete="new-password"
+                            required>
+
+                    <button
+                        class="button button-primary submit-button"
+                        type="submit">
+
+                        Criar conta <span>↗</span>
+
+                    </button>
+
+                    <p
+                        class="form-feedback"
+                        id="register-feedback"
+                        role="status">
+                    </p>
+
+                </form>
+
+                <p class="switch-auth">
+                    Já tem uma conta?
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        id="show-login">
+
+                        Entrar
+
+                    </button>
+                </p>
+
+            </div>
+
+
+            <!-- LOGIN -->
+
+            <div id="login-panel" hidden>
+
+                <span class="modal-kicker">
+                    BEM-VINDO DE VOLTA
+                </span>
+
+                <h2 id="login-title">
+                    Acesse sua conta<span>.</span>
+                </h2>
+
+                <p class="modal-description">
+                    Entre para continuar de onde parou.
+                </p>
+
+                <form id="login-form">
+
+                    <label for="login-email">E-mail</label>
+
+                    <input
+                        id="login-email"
+                        name="email"
+                        type="email"
+                        placeholder="voce@email.com"
+                        autocomplete="email"
+                        required>
+
+                    <label for="login-password">Senha</label>
+
+                    <input
+                        id="login-password"
+                        name="password"
+                        type="password"
+                        placeholder="Sua senha"
+                        autocomplete="current-password"
+                        required>
+
+                    <button
+                        class="button button-primary submit-button"
+                        type="submit">
+
+                        Entrar <span>↗</span>
+
+                    </button>
+
+                    <p
+                        class="form-feedback"
+                        id="login-feedback"
+                        role="status">
+                    </p>
+
+                </form>
+
+                <p class="switch-auth">
+                    Ainda não tem conta?
+
+                    <button
+                        type="button"
+                        class="text-button"
+                        id="show-register">
+
+                        Criar conta
+
+                    </button>
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
 
 </body>
 </html>
