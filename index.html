@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,30 +17,52 @@
 
     <div class="background-glow glow-one"></div>
     <div class="background-glow glow-two"></div>
+    <div class="background-grid"></div>
 
     <header class="site-header">
 
-        <a href="index.html" class="brand">
-            <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
-            <span>CoTask</span>
-        </a>
+    <!-- LOGO CENTRALIZADA -->
+    <a href="index.html" class="brand">
+        <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
+        <span>CoTask</span>
+    </a>
 
-        <nav class="main-nav">
-            <a href="#inicio" class="nav-link">Início</a>
-            <a href="#sobre" class="nav-link">Sobre</a>
+    <!-- BOTÕES DE ACESSO -->
+    <nav class="main-nav">
 
-            <button class="button button-ghost" id="open-login" type="button">
+        <div id="auth-buttons">
+            <button class="button button-ghost" id="open-login">
                 Entrar
             </button>
 
-            <button class="button button-primary" id="open-register" type="button">
+            <button class="button button-primary" id="open-register">
                 Criar conta
             </button>
-        </nav>
+        </div>
 
-    </header>
+        <!-- ÁREA DO USUÁRIO LOGADO -->
+        <div id="user-area" class="user-area" hidden>
+
+            <a href="pages/rotinas.html" class="button button-outline">
+                Rotinas
+            </a>
+
+            <button id="logout-button" class="button button-ghost">
+                Sair
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- NOME DO USUÁRIO -->
+    <div id="user-name" class="user-name"></div>
+
+</header>
 
     <main>
+
+        <!-- APRESENTAÇÃO -->
 
         <section class="hero" id="inicio">
 
@@ -112,44 +135,165 @@
                     SISTEMA PRONTO
                 </div>
 
+                <div class="floating-orbit orbit-one"></div>
+                <div class="floating-orbit orbit-two"></div>
+
             </div>
 
         </section>
 
-        <section class="feature-strip" id="sobre">
+        <!-- SOBRE O PROJETO -->
 
-            <article class="feature-card">
-                <span class="feature-number">01</span>
+        <section class="about-section">
 
-                <div>
-                    <h2>Planeje</h2>
+            <div class="section-heading">
+
+                <span class="section-kicker">01 / SOBRE O PROJETO</span>
+
+                <h2>
+                    Sua rotina merece
+                    <span>mais organização.</span>
+                </h2>
+
+                <p>
+                    O CoTask é uma plataforma criada para facilitar
+                    o planejamento e o acompanhamento das atividades
+                    do dia a dia.
+                </p>
+
+            </div>
+
+            <div class="about-content">
+
+                <article class="about-card about-main-card">
+
+                    <span class="card-symbol">⌘</span>
+
+                    <h3>O que é o CoTask?</h3>
+
                     <p>
-                        Organize seus compromissos em um só lugar.
+                        Uma ferramenta de organização pessoal que reúne
+                        suas atividades em um só lugar. Com calendário
+                        interativo e gerenciamento de tarefas, você
+                        consegue visualizar seus compromissos e acompanhar
+                        seu progresso com mais facilidade.
                     </p>
-                </div>
-            </article>
 
-            <article class="feature-card">
-                <span class="feature-number pink">02</span>
+                </article>
 
-                <div>
-                    <h2>Acompanhe</h2>
+                <article class="about-card">
+
+                    <span class="card-symbol pink-symbol">◈</span>
+
+                    <h3>Por que utilizar?</h3>
+
                     <p>
-                        Visualize sua rotina com clareza pelo calendário.
+                        Para diminuir a desorganização, evitar esquecimentos
+                        e ter uma visão mais clara de tudo o que precisa
+                        ser feito.
                     </p>
-                </div>
-            </article>
 
-            <article class="feature-card">
-                <span class="feature-number purple">03</span>
+                </article>
 
-                <div>
-                    <h2>Compartilhe</h2>
-                    <p>
-                        Mantenha os participantes informados.
-                    </p>
-                </div>
-            </article>
+            </div>
+
+        </section>
+
+        <!-- FUNCIONALIDADES -->
+
+        <section class="feature-section">
+
+            <div class="section-heading">
+
+                <span class="section-kicker">02 / FUNCIONALIDADES</span>
+
+                <h2>
+                    Tudo conectado.
+                    <span>Um só sistema.</span>
+                </h2>
+
+                <p>
+                    Recursos para transformar seus compromissos
+                    em uma rotina mais organizada.
+                </p>
+
+            </div>
+
+            <div class="feature-strip">
+
+                <article class="feature-card">
+
+                    <span class="feature-number">01</span>
+
+                    <div>
+                        <h3>Planeje</h3>
+
+                        <p>
+                            Cadastre suas atividades, defina horários
+                            e organize seus compromissos.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="feature-card">
+
+                    <span class="feature-number pink">02</span>
+
+                    <div>
+                        <h3>Acompanhe</h3>
+
+                        <p>
+                            Visualize suas tarefas em um calendário
+                            e acompanhe o andamento de cada atividade.
+                        </p>
+                    </div>
+
+                </article>
+
+                <article class="feature-card">
+
+                    <span class="feature-number purple">03</span>
+
+                    <div>
+                        <h3>Compartilhe</h3>
+
+                        <p>
+                            Convide participantes e mantenha todos
+                            informados sobre as atividades.
+                        </p>
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- CHAMADA FINAL -->
+
+        <section class="final-section">
+
+            <span class="section-kicker">03 / SEU PRÓXIMO PASSO</span>
+
+            <h2>
+                Chega de deixar tudo
+                <span>para depois.</span>
+            </h2>
+
+            <p>
+                Organize suas atividades e assuma o controle
+                da sua rotina com o CoTask.
+            </p>
+
+            <button
+                class="button button-primary button-large"
+                id="final-register"
+                type="button">
+
+                Começar agora <span>↗</span>
+
+            </button>
 
         </section>
 
@@ -237,16 +381,18 @@
                         autocomplete="new-password"
                         required>
 
-                        <label for="register-confirm-password">Confirmar senha</label>
+                    <label for="register-confirm-password">
+                        Confirmar senha
+                    </label>
 
-                        <input
-                            id="register-confirm-password"
-                            name="confirm-password"
-                            type="password"
-                            placeholder="Digite sua senha novamente"
-                            minlength="6"
-                            autocomplete="new-password"
-                            required>
+                    <input
+                        id="register-confirm-password"
+                        name="confirm-password"
+                        type="password"
+                        placeholder="Digite sua senha novamente"
+                        minlength="6"
+                        autocomplete="new-password"
+                        required>
 
                     <button
                         class="button button-primary submit-button"
