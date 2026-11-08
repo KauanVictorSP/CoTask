@@ -33,7 +33,7 @@ jobs:
       - name: Publicar conteúdo da pasta src
         uses: actions/upload-pages-artifact@v4
         with:
-          path: './src'
+          path: './'
 
       - name: Implantar site
         id: deployment
