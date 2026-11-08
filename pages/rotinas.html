@@ -62,57 +62,63 @@
             </div>
 
             <!-- CALENDÁRIO -->
-            <section class="calendario">
+           
+<!-- CALENDÁRIO -->
+<section class="calendario">
 
-                <div class="calendario-cabecalho">
-                    <button id="mes-anterior">&lt;</button>
+    <div class="navegacao-calendario">
+        <button id="mes-anterior" type="button">&lt;</button>
 
-                    <h2 id="mes-atual">Novembro 2026</h2>
+        <h2 id="mes-atual"></h2>
 
-                    <button id="proximo-mes">&gt;</button>
-                </div>
+        <button id="proximo-mes" type="button">&gt;</button>
+    </div>
 
-                <div class="dias-semana">
-                    <span>Dom</span>
-                    <span>Seg</span>
-                    <span>Ter</span>
-                    <span>Qua</span>
-                    <span>Qui</span>
-                    <span>Sex</span>
-                    <span>Sáb</span>
-                </div>
+    <div class="dias-semana">
+        <span>Dom</span>
+        <span>Seg</span>
+        <span>Ter</span>
+        <span>Qua</span>
+        <span>Qui</span>
+        <span>Sex</span>
+        <span>Sáb</span>
+    </div>
 
-                <div id="dias-calendario" class="dias-calendario">
-                    <!-- Os dias serão criados pelo JavaScript -->
-                </div>
+    <div id="dias-calendario"></div>
 
-            </section>
+</section>
 
-            <!-- ATIVIDADES -->
-            <section class="atividades">
+<!-- ATIVIDADES -->
+<section class="atividades">
 
-                <div class="atividades-cabecalho">
-                    <h2>Atividades de <span id="data-selecionada"></span></h2>
+    <div class="cabecalho-atividades">
 
-                    <button id="botao-adicionar-atividade">
-                        + Adicionar atividade
-                    </button>
+        <div class="informacoes-data">
 
-            
+            <h2>
+                Atividades de <span id="data-selecionada"></span>
+            </h2>
 
-                </div>
+            <div id="informacao-feriado"></div>
 
-                <div id="lista-atividades">
+        </div>
 
-                    <p class="mensagem-vazia">
-                        Selecione um dia no calendário para visualizar suas atividades.
-                    </p>
+        <button id="botao-adicionar-atividade" type="button">
+            + Adicionar atividade
+        </button>
 
-                </div>
+    </div>
 
-            </section>
+    <div id="lista-atividades">
 
-        </section>
+        <p class="mensagem-vazia">
+            Selecione um dia no calendário para visualizar suas atividades.
+        </p>
+
+    </div>
+
+</section>
+
 
     </main>
     <!-- MODAL DE NOVA ATIVIDADE -->

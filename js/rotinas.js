@@ -55,6 +55,47 @@ function atualizarDataSelecionada() {
 }
 
 // =====================================
+// EXIBIR INFORMAÇÃO DO FERIADO
+// =====================================
+
+function mostrarInformacaoFeriado() {
+    const elementoFeriado = document.getElementById("informacao-feriado");
+
+    const dataFormatada = [
+        dataSelecionada.getFullYear(),
+        String(dataSelecionada.getMonth() + 1).padStart(2, "0"),
+        String(dataSelecionada.getDate()).padStart(2, "0")
+    ].join("-");
+
+    const feriadoSelecionado = feriados.find((item) => {
+        return item.date === dataFormatada;
+    });
+
+    elementoFeriado.innerHTML = "";
+
+    if (!feriadoSelecionado) {
+        return;
+    }
+
+    const mensagem = document.createElement("div");
+    mensagem.classList.add("informacao-feriado");
+
+    const icone = document.createElement("span");
+    icone.textContent = "🎉";
+
+    const nome = document.createElement("strong");
+    nome.textContent = `Feriado: ${feriadoSelecionado.name}`;
+
+    const tipo = document.createElement("small");
+    tipo.textContent = "Feriado nacional";
+
+    mensagem.appendChild(icone);
+    mensagem.appendChild(nome);
+    mensagem.appendChild(tipo);
+
+    elementoFeriado.appendChild(mensagem);
+}
+// =====================================
 // EXIBIR CALENDÁRIO
 // =====================================
 
@@ -73,6 +114,7 @@ function mostrarCalendario() {
     calendario.innerHTML = "";
 
     atualizarDataSelecionada();
+    mostrarInformacaoFeriado();
 
     // Espaços antes do primeiro dia do mês
 
