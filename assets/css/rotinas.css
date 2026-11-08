@@ -1,366 +1,1263 @@
 
-/* =====================================
-   CONFIGURAÇÕES GERAIS
-===================================== */
+/* ==================================================
+   COTASK - CYBERPUNK ROUTINES INTERFACE
+================================================== */
+
+/* ==================================================
+   FONTES
+================================================== */
+
+@font-face {
+    font-family: "Cyberthic";
+    src: url("../fonts/Cyberthic.otf") format("opentype");
+}
+
+@font-face {
+    font-family: "Cyber Freight";
+    src: url("../fonts/CYBERFREIGHT-Normal.otf") format("opentype");
+}
+
+/* ==================================================
+   VARIÁVEIS
+================================================== */
+
+:root {
+    --bg: #080911;
+    --bg-secondary: #0D1020;
+    --panel: #101426;
+    --panel-light: #171C31;
+
+    --cyan: #19E6F2;
+    --cyan-dark: #087F9A;
+    --purple: #A855F7;
+    --pink: #EC36C9;
+
+    --white: #F4F3FF;
+    --muted: #858CA9;
+
+    --border: rgba(126, 146, 190, 0.18);
+
+    --gradient: linear-gradient(
+        110deg,
+        #19E6F2,
+        #8B72FF 55%,
+        #EC36C9
+    );
+
+    --glow-cyan: 0 0 18px rgba(25, 230, 242, 0.25);
+    --glow-purple: 0 0 22px rgba(168, 85, 247, 0.22);
+}
+
+/* ==================================================
+   RESET E CONFIGURAÇÕES GERAIS
+================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
 
 body {
     margin: 0;
     min-height: 100vh;
-    background: #090b14;
-    color: #f1f1f7;
-    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            ellipse at 0% 35%,
+            rgba(25, 230, 242, 0.09),
+            transparent 35%
+        ),
+        radial-gradient(
+            ellipse at 100% 75%,
+            rgba(236, 54, 201, 0.08),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color: var(--white);
+    font-family: "Inter", Arial, sans-serif;
+
+    overflow-x: hidden;
 }
 
-/* =====================================
-   CABEÇALHO
-===================================== */
-
-.topo {
-    height: 75px;
-    padding: 0 35px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #101321;
-    border-bottom: 1px solid #242943;
+button,
+input,
+textarea {
+    font: inherit;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 22px;
-    font-weight: bold;
-    color: #00e5ff;
-}
-
-.logo img {
-    width: 42px;
-    height: 42px;
-    object-fit: contain;
-}
-
-.usuario {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.usuario button {
-    padding: 9px 18px;
-    background: transparent;
-    border: 1px solid #ff3cac;
-    border-radius: 8px;
-    color: #ff3cac;
+button {
     cursor: pointer;
 }
 
-/* =====================================
-   CONTEÚDO PRINCIPAL
-===================================== */
+::selection {
+    background: var(--purple);
+    color: white;
+}
+
+/* ==================================================
+   CABEÇALHO
+================================================== */
+
+.topo {
+    position: relative;
+    z-index: 5;
+
+    min-height: 100px;
+    padding: 12px 6%;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    background: rgba(9, 10, 20, 0.94);
+    backdrop-filter: blur(15px);
+
+    border-bottom: 1px solid var(--border);
+
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+}
+
+.topo::before {
+    content: "";
+
+    position: absolute;
+    bottom: -1px;
+    left: 15%;
+
+    width: 70%;
+    height: 2px;
+
+    background: var(--gradient);
+    box-shadow: 0 0 15px var(--purple);
+}
+
+/* LOGO */
+
+.logo {
+    grid-column: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    font-family: "Cyberthic", sans-serif;
+    font-size: 43px;
+    letter-spacing: 2px;
+}
+
+.logo img {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+
+    filter:
+        drop-shadow(0 0 8px var(--cyan))
+        drop-shadow(0 0 15px var(--purple));
+}
+
+.logo span {
+    background: var(--gradient);
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.25));
+}
+
+/* USUÁRIO */
+
+.usuario {
+    grid-column: 3;
+    justify-self: end;
+
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+#nome-usuario {
+    color: var(--cyan);
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 19px;
+    letter-spacing: 1px;
+
+    text-shadow: 0 0 12px rgba(25, 230, 242, 0.4);
+}
+
+.usuario button {
+    padding: 10px 20px;
+
+    color: var(--pink);
+    background: rgba(236, 54, 201, 0.06);
+
+    border: 1px solid rgba(236, 54, 201, 0.5);
+    border-radius: 7px;
+
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    transition: 0.25s ease;
+}
+
+.usuario button:hover {
+    color: #080911;
+    background: var(--gradient);
+
+    box-shadow: 0 0 22px rgba(236, 54, 201, 0.4);
+
+    transform: translateY(-2px);
+}
+
+/* ==================================================
+   ESTRUTURA E NAVEGAÇÃO
+================================================== */
 
 .conteudo {
     display: flex;
-    min-height: calc(100vh - 75px);
+    flex-direction: column;
+
+    width: min(1180px, 90%);
+    min-height: calc(100vh - 100px);
+
+    margin: 0 auto;
 }
 
-/* =====================================
-   MENU LATERAL
-===================================== */
+/* MENU */
 
 .menu-lateral {
-    width: 230px;
-    padding: 30px 20px;
-    background: #101321;
-    border-right: 1px solid #242943;
-    box-sizing: border-box;
+    width: 100%;
+    min-height: 75px;
+    padding: 12px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+
+    background: linear-gradient(
+        90deg,
+        rgba(11, 13, 27, 0.95),
+        rgba(25, 20, 48, 0.95),
+        rgba(11, 13, 27, 0.95)
+    );
+
+    border-bottom: 1px solid rgba(168, 85, 247, 0.28);
+
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .menu-lateral h2 {
-    font-size: 16px;
-    color: #858ba8;
-    margin-bottom: 25px;
+    display: none;
 }
 
 .menu-lateral nav {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 12px;
 }
 
 .menu-lateral nav a {
-    padding: 13px;
-    color: #b8bdd3;
+    position: relative;
+
+    padding: 12px 17px;
+
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
     text-decoration: none;
-    border-radius: 8px;
-    transition: 0.2s;
+
+    border: 1px solid transparent;
+    border-radius: 7px;
+
+    transition: 0.25s ease;
 }
 
 .menu-lateral nav a:hover,
-.menu-lateral nav a.menu-ativo {
-    background: #1b2940;
-    color: #00e5ff;
+.menu-lateral nav a.ativo {
+    color: var(--cyan);
+
+    background: rgba(25, 230, 242, 0.07);
+    border-color: rgba(25, 230, 242, 0.35);
+
+    box-shadow: var(--glow-cyan);
 }
 
 #botao-nova-atividade {
-    width: 100%;
-    margin-top: 30px;
-    padding: 13px;
-    background: linear-gradient(90deg, #00c8e8, #a855f7);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+    padding: 12px 20px;
+
+    border: 1px solid rgba(236, 54, 201, 0.4);
+    border-radius: 7px;
+
+    background: var(--gradient);
+    color: #080911;
+
+    font-weight: 800;
+    letter-spacing: 0.3px;
+
+    transition: 0.25s ease;
 }
 
-/* =====================================
-   ÁREA DE ROTINAS
-===================================== */
+#botao-nova-atividade:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 15px rgba(25, 230, 242, 0.3),
+        0 0 25px rgba(236, 54, 201, 0.3);
+}
+
+/* ==================================================
+   CONTEÚDO PRINCIPAL
+================================================== */
 
 .area-rotinas {
-    flex: 1;
-    padding: 35px;
+    width: 100%;
     min-width: 0;
+
+    margin: 0 auto;
+    padding: 55px 0 75px;
+
+    flex: 1;
+}
+
+/* TÍTULO DA PÁGINA */
+
+.titulo-pagina {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.titulo-pagina::before {
+    content: "SYSTEM / PERSONAL ROUTINES";
+
+    display: block;
+    margin-bottom: 12px;
+
+    color: var(--cyan);
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    text-shadow: 0 0 10px rgba(25, 230, 242, 0.5);
 }
 
 .titulo-pagina h1 {
-    margin: 0 0 8px;
-    font-size: 28px;
-    color: #ffffff;
+    margin: 0 0 10px;
+
+    color: var(--white);
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
 }
 
 .titulo-pagina p {
-    margin: 0;
-    color: #858ba8;
+    margin: 10px 0 0;
+
+    color: #A5A3BD;
+    font-size: 15px;
+    line-height: 1.7;
 }
 
-/* =====================================
+/* ==================================================
    CALENDÁRIO
-===================================== */
+================================================== */
 
 .calendario {
-    margin-top: 30px;
-    padding: 25px;
-    background: #101321;
-    border: 1px solid #242943;
+    position: relative;
+
+    width: 100%;
+    margin-top: 0;
+    padding: 35px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(23, 23, 41, 0.95),
+        rgba(11, 11, 20, 0.98)
+    );
+
+    border: 1px solid rgba(25, 230, 242, 0.28);
     border-radius: 14px;
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.25),
+        inset 0 0 35px rgba(25, 230, 242, 0.025);
+
+    overflow: hidden;
 }
+
+.calendario::before {
+    content: "CALENDAR SYSTEM";
+
+    position: absolute;
+    top: 0;
+    left: 25px;
+
+    padding: 6px 14px;
+
+    color: var(--cyan);
+    background: rgba(25, 230, 242, 0.08);
+
+    border: 1px solid rgba(25, 230, 242, 0.25);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+/* CABEÇALHO DO CALENDÁRIO */
 
 .calendario-cabecalho {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 25px;
+
+    margin: 15px 0 30px;
 }
 
 .calendario-cabecalho h2 {
-    color: #00e5ff;
-    font-size: 20px;
+    color: var(--cyan);
+
+    font-family: "Cyberthic", sans-serif;
+    font-size: 22px;
+    font-weight: normal;
+
+    text-shadow: 0 0 12px rgba(25, 230, 242, 0.35);
+    text-transform: capitalize;
 }
 
 .calendario-cabecalho button {
-    width: 36px;
-    height: 36px;
-    background: #1b2940;
-    border: 1px solid #00e5ff;
+    width: 42px;
+    height: 42px;
+
+    background: rgba(25, 230, 242, 0.06);
+
+    border: 1px solid rgba(25, 230, 242, 0.5);
     border-radius: 8px;
-    color: #00e5ff;
-    cursor: pointer;
+
+    color: var(--cyan);
+    font-size: 20px;
+
+    transition: 0.25s ease;
 }
+
+.calendario-cabecalho button:hover {
+    color: #080B16;
+    background: var(--cyan);
+
+    box-shadow: 0 0 18px rgba(25, 230, 242, 0.4);
+}
+
+/* DIAS DA SEMANA E DO MÊS */
 
 .dias-semana,
 .dias-calendario {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 10px;
+    gap: 12px;
 }
 
 .dias-semana span {
-    padding: 10px 0;
+    padding: 12px 0;
+
+    color: #9295C7;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+
     text-align: center;
-    color: #858ba8;
-    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .dias-calendario {
-    grid-auto-rows: 65px;
+    grid-auto-rows: 75px;
 }
 
 .dias-calendario .dia {
+    position: relative;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #171c2d;
-    border: 1px solid #242943;
-    border-radius: 8px;
-    color: #dce0f0;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(151, 145, 194, 0.15);
+    border-radius: 9px;
+
+    color: #D8D9ED;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+
     cursor: pointer;
-    transition: 0.2s;
+    transition: 0.25s ease;
 }
 
 .dias-calendario .dia:hover {
-    border-color: #00e5ff;
-    color: #00e5ff;
+    color: var(--cyan);
+
+    background: rgba(25, 230, 242, 0.08);
+    border-color: var(--cyan);
+
+    box-shadow: 0 0 15px rgba(25, 230, 242, 0.12);
+    transform: translateY(-3px);
 }
 
 .dias-calendario .dia.selecionado {
-    background: #123b4b;
-    border-color: #00e5ff;
-    color: #00e5ff;
+    color: var(--cyan);
+
+    background: linear-gradient(
+        145deg,
+        rgba(25, 230, 242, 0.18),
+        rgba(168, 85, 247, 0.12)
+    );
+
+    border: 1px solid var(--cyan);
+
+    box-shadow:
+        0 0 18px rgba(25, 230, 242, 0.2),
+        inset 0 0 15px rgba(25, 230, 242, 0.08);
+
+    text-shadow: 0 0 12px var(--cyan);
 }
 
 .dias-calendario .dia.vazio {
     background: transparent;
     border: none;
     cursor: default;
+    box-shadow: none;
 }
 
-/* =====================================
-   ATIVIDADES
-===================================== */
+/* ==================================================
+   PAINEL DE MISSÕES
+================================================== */
 
 .atividades {
-    margin-top: 30px;
-    padding: 25px;
-    background: #101321;
-    border: 1px solid #242943;
+    position: relative;
+
+    width: 100%;
+    margin-top: 35px;
+    padding: 45px 30px 30px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(23, 20, 42, 0.96),
+        rgba(11, 11, 20, 0.98)
+    );
+
+    border: 1px solid rgba(168, 85, 247, 0.4);
     border-radius: 14px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+
+    overflow: hidden;
 }
+
+/* ETIQUETA MISSION CONTROL */
+
+.atividades::before {
+    content: "MISSION CONTROL";
+
+    position: absolute;
+    top: 0;
+    right: 25px;
+
+    width: auto;
+    height: auto;
+
+    padding: 7px 14px;
+
+    color: var(--pink);
+    background: #171329;
+
+    border: 1px solid rgba(236, 54, 201, 0.4);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 9px;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+    z-index: 2;
+}
+
+.atividades::after {
+    content: none;
+}
+
+/* CABEÇALHO DAS MISSÕES */
 
 .atividades-cabecalho {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 15px;
+
+    margin: 15px 0 25px;
 }
 
 .atividades-cabecalho h2 {
-    font-size: 20px;
+    margin: 0;
+
+    color: var(--white);
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 .atividades-cabecalho button {
-    padding: 11px 16px;
-    background: transparent;
-    border: 1px solid #a855f7;
+    padding: 12px 18px;
+
+    color: var(--cyan);
+    background: rgba(25, 230, 242, 0.05);
+
+    border: 1px solid rgba(25, 230, 242, 0.45);
     border-radius: 8px;
-    color: #c084fc;
-    cursor: pointer;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    transition: 0.25s ease;
 }
 
-.mensagem-vazia {
+.atividades-cabecalho button:hover {
+    color: #080B16;
+    background: var(--cyan);
+
+    border-color: transparent;
+
+    box-shadow: 0 0 18px rgba(25, 230, 242, 0.3);
+    transform: translateY(-2px);
+}
+
+/* ==================================================
+   LISTA E CARDS DAS MISSÕES
+================================================== */
+
+#lista-atividades {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+
     margin-top: 25px;
-    color: #858ba8;
+}
+
+.missao-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+
+    min-width: 0;
+    min-height: 190px;
+
+    padding: 25px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(26, 29, 51, 0.95),
+        rgba(15, 17, 32, 0.98)
+    );
+
+    border: 1px solid rgba(25, 230, 242, 0.22);
+    border-left: 3px solid var(--cyan);
+    border-radius: 9px;
+
+    font-family: "Cyber Freight", sans-serif;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
+    transition: 0.25s ease;
+    overflow: hidden;
+}
+
+.missao-card::after {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: 75px;
+    height: 75px;
+
+    background: var(--purple);
+    filter: blur(65px);
+    opacity: 0.15;
+
+    pointer-events: none;
+}
+
+.missao-card:hover {
+    border-color: rgba(25, 230, 242, 0.6);
+
+    box-shadow:
+        0 0 22px rgba(25, 230, 242, 0.1),
+        0 15px 30px rgba(0, 0, 0, 0.3);
+
+    transform: translateY(-4px);
+}
+
+/* TÍTULO DA MISSÃO */
+
+.missao-card h3 {
+    margin: 0;
+
+    color: var(--white);
+
+    font-family: "Cyberthic", sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.5;
+
+    overflow-wrap: anywhere;
+}
+
+/* DESCRIÇÃO DA MISSÃO */
+
+.missao-card p {
+    margin: 15px 0 20px;
+
+    color: #D0D3E8;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+}
+
+/* INFORMAÇÕES DA MISSÃO */
+
+.missao-card span {
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 16px;
+}
+
+/* HORÁRIO */
+
+.missao-card span:first-of-type {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--cyan);
+    font-weight: bold;
+
+    text-shadow: 0 0 10px rgba(25, 230, 242, 0.3);
+}
+
+/* STATUS */
+
+.status-missao {
+    display: block;
+
+    width: fit-content;
+    margin: 15px 0;
+    padding: 7px 12px;
+
+    color: var(--pink);
+    background: rgba(236, 54, 201, 0.08);
+
+    border: 1px solid rgba(236, 54, 201, 0.4);
+    border-radius: 6px;
+
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* MISSÃO CONCLUÍDA */
+
+.missao-card.concluida {
+    border-left-color: var(--purple);
+    opacity: 0.8;
+}
+
+.missao-card.concluida .status-missao {
+    color: var(--cyan);
+
+    border-color: rgba(25, 230, 242, 0.4);
+    background: rgba(25, 230, 242, 0.08);
+}
+
+/* ==================================================
+   BOTÕES DE AÇÃO DOS CARDS
+================================================== */
+
+.botoes-acao {
+    display: flex;
+    align-items: stretch;
+    gap: 12px;
+
+    width: 100%;
+    margin-top: auto;
+}
+
+.botoes-acao button {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+    min-height: 44px;
+
+    margin: 0;
+    padding: 10px 12px;
+
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* CONCLUIR / REABRIR */
+
+.botao-status {
+    color: var(--cyan);
+    background: rgba(25, 230, 242, 0.06);
+
+    border: 1px solid rgba(25, 230, 242, 0.4);
+}
+
+.botao-status:hover {
+    color: #080B16;
+    background: var(--cyan);
+
+    box-shadow: 0 0 15px rgba(25, 230, 242, 0.3);
+}
+
+/* EDITAR */
+
+.botao-editar {
+    color: var(--purple);
+    background: rgba(168, 85, 247, 0.06);
+
+    border: 1px solid rgba(168, 85, 247, 0.45);
+}
+
+.botao-editar:hover {
+    color: white;
+    background: var(--purple);
+
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
+
+/* ==================================================
+   MENSAGEM DE LISTA VAZIA
+================================================== */
+
+.mensagem-vazia {
+    grid-column: 1 / -1;
+
+    margin: 0;
+    padding: 40px 20px;
+
+    color: var(--muted);
+    background: rgba(168, 85, 247, 0.035);
+
+    border: 1px dashed rgba(168, 85, 247, 0.35);
+    border-radius: 10px;
+
+    font-family: "Cyber Freight", sans-serif;
+    font-size: 18px;
     text-align: center;
 }
 
-/* =====================================
+/* ==================================================
+   FORMULÁRIO DE ATIVIDADE
+================================================== */
+
+.form-atividade {
+    margin-top: 25px;
+    padding: 28px;
+
+    background: var(--panel);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 12px;
+}
+
+.form-atividade h3 {
+    margin-top: 0;
+
+    color: var(--cyan);
+    font-family: "Cyberthic", sans-serif;
+    font-size: 23px;
+}
+
+.form-atividade label {
+    display: block;
+    margin: 17px 0 8px;
+
+    color: #D8D6E9;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.form-atividade input,
+.form-atividade textarea {
+    width: 100%;
+    padding: 14px;
+
+    color: var(--white);
+    background: #080B16;
+
+    border: 1px solid rgba(126, 146, 190, 0.3);
+    border-radius: 8px;
+
+    font-family: "Inter", Arial, sans-serif;
+    font-size: 14px;
+
+    transition: 0.2s ease;
+}
+
+.form-atividade input:focus,
+.form-atividade textarea:focus {
+    outline: none;
+
+    border-color: var(--cyan);
+
+    box-shadow:
+        0 0 0 3px rgba(25, 230, 242, 0.08),
+        0 0 15px rgba(25, 230, 242, 0.08);
+}
+
+.form-atividade input::placeholder,
+.form-atividade textarea::placeholder {
+    color: #6F7591;
+}
+
+/* BOTÕES DO FORMULÁRIO */
+
+.botoes-formulario {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 22px;
+}
+
+.botoes-formulario button {
+    padding: 12px 20px;
+
+    border-radius: 7px;
+    font-weight: 700;
+
+    transition: 0.2s ease;
+}
+
+.botoes-formulario button[type="submit"] {
+    color: #080911;
+    background: var(--gradient);
+    border: none;
+}
+
+.botoes-formulario button[type="submit"]:hover {
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+}
+
+#cancelar-atividade {
+    color: var(--pink);
+    background: transparent;
+
+    border: 1px solid rgba(236, 54, 201, 0.55);
+}
+
+#cancelar-atividade:hover {
+    background: rgba(236, 54, 201, 0.1);
+}
+
+/* ==================================================
+   MODAL
+================================================== */
+
+.modal-atividade {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background: rgba(3, 3, 10, 0.85);
+    backdrop-filter: blur(12px);
+}
+
+.modal-atividade[hidden] {
+    display: none !important;
+}
+
+.conteudo-modal {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: linear-gradient(
+        145deg,
+        #19182D,
+        #0C0E1B 80%
+    );
+
+    border: 1px solid rgba(25, 230, 242, 0.4);
+    border-radius: 14px;
+
+    box-shadow:
+        0 0 35px rgba(25, 230, 242, 0.1),
+        0 0 60px rgba(168, 85, 247, 0.15);
+}
+
+.conteudo-modal .form-atividade {
+    margin: 0;
+    border: none;
+}
+
+/* FECHAR MODAL */
+
+.fechar-modal {
+    position: absolute;
+    top: 12px;
+    right: 17px;
+    z-index: 2;
+
+    color: var(--pink);
+    background: transparent;
+    border: none;
+
+    font-size: 30px;
+
+    transition: 0.2s ease;
+}
+
+.fechar-modal:hover {
+    color: var(--cyan);
+    transform: rotate(90deg);
+}
+
+/* ==================================================
+   SCROLLBAR
+================================================== */
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080911;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+        var(--cyan),
+        var(--purple),
+        var(--pink)
+    );
+
+    border-radius: 10px;
+}
+
+/* ==================================================
    RESPONSIVIDADE
-===================================== */
+================================================== */
 
 @media (max-width: 750px) {
 
-    .conteudo {
-        flex-direction: column;
+    /* CABEÇALHO */
+
+    .topo {
+        grid-template-columns: 1fr auto;
+        min-height: 80px;
+        padding: 10px 4%;
     }
 
+    .logo {
+        grid-column: 1;
+        justify-self: start;
+        font-size: 25px;
+    }
+
+    .logo img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .usuario {
+        grid-column: 2;
+        gap: 8px;
+    }
+
+    #nome-usuario {
+        font-size: 14px;
+    }
+
+    .usuario button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    /* MENU */
+
     .menu-lateral {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #242943;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .menu-lateral nav {
-        flex-direction: row;
         flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .menu-lateral nav a {
+        padding: 9px 10px;
+        font-size: 12px;
+    }
+
+    /* CONTEÚDO */
+
+    .conteudo {
+        width: 92%;
     }
 
     .area-rotinas {
-        padding: 20px;
+        padding: 35px 0;
     }
 
+    /* CALENDÁRIO */
+
     .calendario {
-        padding: 12px;
+        padding: 25px 13px 15px;
     }
 
     .dias-semana,
     .dias-calendario {
-        gap: 4px;
+        gap: 5px;
     }
 
     .dias-calendario {
-        grid-auto-rows: 45px;
+        grid-auto-rows: 48px;
+    }
+
+    .dias-calendario .dia {
+        font-size: 14px;
+    }
+
+    /* MISSÕES */
+
+    .atividades {
+        padding: 45px 16px 23px;
     }
 
     .atividades-cabecalho {
         align-items: flex-start;
         flex-direction: column;
     }
+
+    #lista-atividades {
+        grid-template-columns: 1fr;
+    }
+
+    .missao-card h3 {
+        font-size: 23px;
+    }
+
+    .missao-card p {
+        font-size: 16px;
+    }
 }
 
+@media (max-width: 420px) {
 
-/* =====================================
-   FORMULÁRIO DE ATIVIDADES
-===================================== */
+    .logo {
+        font-size: 19px;
+        gap: 5px;
+    }
 
-.form-atividade {
-    margin-top: 25px;
-    padding: 22px;
-    background: #171c2d;
-    border: 1px solid #a855f7;
-    border-radius: 12px;
+    .logo img {
+        width: 34px;
+        height: 34px;
+    }
+
+    #nome-usuario {
+        font-size: 12px;
+    }
+
+    .menu-lateral nav a {
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .titulo-pagina h1 {
+        font-size: 28px;
+    }
+
+    .calendario-cabecalho h2 {
+        font-size: 15px;
+    }
+
+    .dias-calendario {
+        grid-auto-rows: 42px;
+    }
+
+    .atividades::before {
+        right: 15px;
+    }
+
+    .missao-card {
+        padding: 18px;
+    }
+
+    .botoes-acao {
+        gap: 8px;
+    }
+
+    .botoes-acao button {
+        padding: 9px 6px;
+        font-size: 12px;
+    }
+
+    .missao-card p {
+        font-size: 16px;
+    }
 }
 
-.form-atividade h3 {
-    margin-top: 0;
-    color: #00e5ff;
+/* BOTÃO EXCLUIR */
+
+.botao-excluir {
+    color: #FF526B;
+    background: rgba(255, 82, 107, 0.06);
+    border: 1px solid rgba(255, 82, 107, 0.45);
 }
 
-.form-atividade label {
-    display: block;
-    margin: 15px 0 7px;
-    color: #b8bdd3;
-}
-
-.form-atividade input,
-.form-atividade textarea {
-    width: 100%;
-    padding: 12px;
-    box-sizing: border-box;
-    background: #090b14;
-    border: 1px solid #343b59;
-    border-radius: 7px;
+.botao-excluir:hover {
     color: white;
-    font-family: Arial, sans-serif;
-}
-
-.form-atividade input:focus,
-.form-atividade textarea:focus {
-    outline: none;
-    border-color: #00e5ff;
-}
-
-.botoes-formulario {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-.botoes-formulario button {
-    padding: 11px 16px;
-    border-radius: 7px;
-    cursor: pointer;
-}
-
-.botoes-formulario button[type="submit"] {
-    background: #00c8e8;
-    border: none;
-    color: #090b14;
-    font-weight: bold;
-}
-
-#cancelar-atividade {
-    background: transparent;
-    border: 1px solid #ff3cac;
-    color: #ff3cac;
+    background: #FF526B;
+    box-shadow: 0 0 15px rgba(255, 82, 107, 0.3);
 }
