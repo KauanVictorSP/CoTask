@@ -1365,3 +1365,17 @@ button {
     color: var(--white);
     background: #080B16;
 }
+
+/* =====================================
+   FERIADOS
+===================================== */
+
+.dia.feriado {
+    border: 1px solid var(--pink);
+    color: var(--pink);
+    box-shadow: 0 0 8px rgba(255, 70, 150, 0.2);
+}
+
+.dia.feriado:hover {
+    background: rgba(255, 70, 150, 0.15);
+}

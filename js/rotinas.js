@@ -13,6 +13,34 @@ let dataAtual = new Date();
 let dataSelecionada = new Date();
 
 // =====================================
+// FERIADOS
+// =====================================
+
+let feriados = [];
+let anoFeriadosCarregado = null;
+
+async function carregarFeriados(ano) {
+    // Evitar buscar novamente o mesmo ano
+
+    if (anoFeriadosCarregado === ano) {
+        return;
+    }
+
+    const resultado = await buscarFeriados(ano);
+
+    // Evitar atualizar o calendário com dados de outro ano
+
+    if (dataAtual.getFullYear() !== ano) {
+        return;
+    }
+
+    feriados = resultado;
+    anoFeriadosCarregado = ano;
+
+    mostrarCalendario();
+}
+
+// =====================================
 // DATA SELECIONADA
 // =====================================
 
@@ -65,6 +93,23 @@ function mostrarCalendario() {
         elementoDia.textContent = dia;
         elementoDia.classList.add("dia");
 
+        // Verificar se o dia possui feriado
+
+        const dataDoDia = [
+            ano,
+            String(mes + 1).padStart(2, "0"),
+            String(dia).padStart(2, "0")
+        ].join("-");
+
+        const feriado = feriados.find((item) => {
+            return item.date === dataDoDia;
+        });
+
+        if (feriado) {
+            elementoDia.classList.add("feriado");
+            elementoDia.title = feriado.name;
+        }
+
         // Destacar a data selecionada
 
         if (
@@ -86,6 +131,9 @@ function mostrarCalendario() {
 
         calendario.appendChild(elementoDia);
     }
+        // Buscar feriados do ano exibido
+
+        carregarFeriados(ano);
 }
 
 // =====================================
