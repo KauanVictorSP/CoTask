@@ -2422,3 +2422,59 @@ a:focus-visible {
 .navegacao-calendario {
     margin-top: 15px;
 }
+
+/* =====================================
+   NOTIFICAÇÕES COTASK
+===================================== */
+
+.notificacao-cotask {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+    z-index: 9999;
+
+    max-width: 380px;
+    padding: 18px 24px;
+
+    background: #101729;
+    border: 1px solid var(--cyan);
+    border-left: 4px solid var(--cyan);
+    border-radius: 10px;
+
+    color: var(--white);
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    box-shadow: 0 0 20px rgba(25, 230, 242, 0.15);
+
+    animation: entrarNotificacao 0.3s ease;
+}
+
+.notificacao-cotask.sucesso {
+    border-color: #19E6A2;
+    box-shadow: 0 0 20px rgba(25, 230, 162, 0.15);
+}
+
+.notificacao-cotask.erro {
+    border-color: #FF4F78;
+    box-shadow: 0 0 20px rgba(255, 79, 120, 0.15);
+}
+
+.notificacao-cotask.saindo {
+    opacity: 0;
+    transform: translateX(30px);
+    transition: 0.3s ease;
+}
+
+@keyframes entrarNotificacao {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}

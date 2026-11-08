@@ -30,6 +30,28 @@ function mostrarUsuarioLogado() {
 
 mostrarUsuarioLogado();
 
+// =====================================
+// NOTIFICAÇÕES DO COTASK
+// =====================================
+
+function mostrarNotificacao(mensagem, tipo = "sucesso") {
+    const notificacao = document.createElement("div");
+
+    notificacao.classList.add("notificacao-cotask", tipo);
+    notificacao.textContent = mensagem;
+
+    document.body.appendChild(notificacao);
+
+    setTimeout(() => {
+        notificacao.classList.add("saindo");
+
+        setTimeout(() => {
+            notificacao.remove();
+        }, 300);
+
+    }, 4000);
+}
+
 
 // =====================================
 // CALENDÁRIO
@@ -782,53 +804,59 @@ if (formularioAtividade) {
 
 
         // =====================================
-        // ENVIAR CONVITE POR E-MAIL
-        // =====================================
+// ENVIAR CONVITE POR E-MAIL
+// =====================================
 
-        if (novaAtividade && nome && email) {
-            try {
-                const dataFormatada = new Date(
-                    `${novaAtividade.data}T00:00:00`
-                ).toLocaleDateString("pt-BR");
+if (novaAtividade && nome && email) {
+    try {
+        const dataFormatada = new Date(
+            `${novaAtividade.data}T00:00:00`
+        ).toLocaleDateString("pt-BR");
 
-                let nomeResponsavel = "Equipe CoTask";
+        let nomeResponsavel = "Equipe CoTask";
 
-                try {
-                    const usuario = JSON.parse(
-                        localStorage.getItem("usuarioLogado")
-                    );
+        try {
+            const usuario = JSON.parse(
+                localStorage.getItem("usuarioLogado")
+            );
 
-                    nomeResponsavel = usuario?.nome || "Equipe CoTask";
+            nomeResponsavel = usuario?.nome || "Equipe CoTask";
 
-                } catch (erro) {
-                    console.error("Erro ao recuperar responsável:", erro);
-                }
-
-                await emailjs.send(
-                    "service_isy8zlo",
-                    "template_3ydhm7y",
-                    {
-                        nome_participante: nome,
-                        email_participante: email,
-                        titulo_atividade: novaAtividade.titulo,
-                        descricao_atividade: novaAtividade.descricao || "Sem descrição.",
-                        data_atividade: dataFormatada,
-                        horario_atividade: novaAtividade.horario || "Não definido",
-                        nome_responsavel: nomeResponsavel
-                    },
-                    {
-                        publicKey: "0apAdxcUloDLms0i_"
-                    }
-                );
-
-                alert("Atividade cadastrada e convite enviado com sucesso!");
-
-            } catch (erro) {
-                console.error("Erro ao enviar convite:", erro);
-
-                alert("Atividade cadastrada, mas não foi possível enviar o convite. Verifique o console.");
-            }
+        } catch (erro) {
+            console.error("Erro ao recuperar responsável:", erro);
         }
+
+        await emailjs.send(
+            "service_isy8zlo",
+            "template_3ydhm7y",
+            {
+                nome_participante: nome,
+                email_participante: email,
+                titulo_atividade: novaAtividade.titulo,
+                descricao_atividade: novaAtividade.descricao || "Sem descrição.",
+                data_atividade: dataFormatada,
+                horario_atividade: novaAtividade.horario || "Não definido",
+                nome_responsavel: nomeResponsavel
+            },
+            {
+                publicKey: "0apAdxcUloDLms0i_"
+            }
+        );
+
+        mostrarNotificacao(
+            "Atividade cadastrada e convite enviado com sucesso!",
+            "sucesso"
+        );
+
+    } catch (erro) {
+        console.error("Erro ao enviar convite:", erro);
+
+        mostrarNotificacao(
+            "Atividade cadastrada, mas não foi possível enviar o convite.",
+            "erro"
+        );
+    }
+}
     });
 }
 
