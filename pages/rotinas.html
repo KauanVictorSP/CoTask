@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -7,12 +8,19 @@
 
     <title>CoTask - Minhas Rotinas</title>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/rotinas.css">
 
-    <script src="../js/api.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@5/dist/email.min.js" defer></script>
-    <script src="../js/rotinas.js" defer></script>
+    <!-- SCRIPTS -->
+    <script src="../assets/js/api.js" defer></script>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@5/dist/email.min.js"
+        defer>
+    </script>
+
+    <script src="../assets/js/rotinas.js" defer></script>
 </head>
 
 <body>
@@ -20,10 +28,10 @@
     <!-- CABEÇALHO -->
     <header class="topo">
 
-        <div class="logo">
+        <a href="../index.html" class="logo">
             <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
             <span>CoTask</span>
-        </div>
+        </a>
 
         <div class="usuario">
             <span id="nome-usuario">Olá!</span>
@@ -32,46 +40,31 @@
 
     </header>
 
+
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo">
-
-        <!-- MENU LATERAL -->
-        <aside class="menu-lateral">
-
-            <h2>Menu</h2>
-
-            <nav>
-                <a href="#" class="menu-ativo">Minhas rotinas</a>
-                <a href="#">Calendário</a>
-                <a href="#">Todas as atividades</a>
-            </nav>
-
-            <button id="botao-nova-atividade" type="button">
-                + Nova atividade
-            </button>
-
-        </aside>
 
         <!-- ÁREA PRINCIPAL -->
         <section class="area-rotinas">
 
-            <div class="titulo-pagina">
-                <div>
-                    <h1>Minhas rotinas</h1>
-                    <p>Organize suas tarefas e acompanhe seu progresso.</p>
-                </div>
-            </div>
 
             <!-- CALENDÁRIO -->
             <section class="calendario">
 
                 <div class="navegacao-calendario">
-                    <button id="mes-anterior" type="button">&lt;</button>
+
+                    <button id="mes-anterior" type="button">
+                        &lt;
+                    </button>
 
                     <h2 id="mes-atual"></h2>
 
-                    <button id="proximo-mes" type="button">&gt;</button>
+                    <button id="proximo-mes" type="button">
+                        &gt;
+                    </button>
+
                 </div>
+
 
                 <div class="dias-semana">
                     <span>Dom</span>
@@ -83,7 +76,9 @@
                     <span>Sáb</span>
                 </div>
 
+
                 <div id="dias-calendario"></div>
+
 
                 <div class="legenda-calendario">
 
@@ -106,6 +101,7 @@
 
             </section>
 
+
             <!-- ATIVIDADES -->
             <section class="atividades">
 
@@ -114,7 +110,8 @@
                     <div class="informacoes-data">
 
                         <h2>
-                            Atividades de <span id="data-selecionada"></span>
+                            Atividades de
+                            <span id="data-selecionada"></span>
                         </h2>
 
                         <div id="informacao-feriado"></div>
@@ -126,6 +123,7 @@
                     </button>
 
                 </div>
+
 
                 <div id="lista-atividades">
 
@@ -141,21 +139,29 @@
 
     </main>
 
+
     <!-- MODAL DE NOVA ATIVIDADE -->
     <div id="modal-atividade" class="modal-atividade" hidden>
 
         <div class="conteudo-modal">
 
-            <button type="button" id="fechar-modal" class="fechar-modal">
+            <button
+                type="button"
+                id="fechar-modal"
+                class="fechar-modal">
                 &times;
             </button>
+
 
             <form id="form-atividade" class="form-atividade">
 
                 <h3>Nova atividade</h3>
 
+
                 <!-- TÍTULO -->
-                <label for="titulo-atividade">Título</label>
+                <label for="titulo-atividade">
+                    Título
+                </label>
 
                 <input
                     type="text"
@@ -164,8 +170,11 @@
                     required
                 >
 
+
                 <!-- DESCRIÇÃO -->
-                <label for="descricao-atividade">Descrição</label>
+                <label for="descricao-atividade">
+                    Descrição
+                </label>
 
                 <textarea
                     id="descricao-atividade"
@@ -173,14 +182,18 @@
                     rows="3"
                 ></textarea>
 
+
                 <!-- DATA -->
-                <label for="data-atividade">Data da atividade</label>
+                <label for="data-atividade">
+                    Data da atividade
+                </label>
 
                 <input
                     type="date"
                     id="data-atividade"
                     required
                 >
+
 
                 <!-- SELEÇÃO DE HORÁRIO -->
                 <label>Horário</label>
@@ -193,8 +206,9 @@
 
                 <div
                     id="horas-disponiveis"
-                    class="grade-horarios"
-                ></div>
+                    class="grade-horarios">
+                </div>
+
 
                 <!-- SELEÇÃO DOS MINUTOS -->
                 <div id="selecao-minutos" hidden>
@@ -215,14 +229,16 @@
 
                     </div>
 
+
                     <label>Selecione os minutos</label>
 
                     <div
                         id="minutos-disponiveis"
-                        class="grade-horarios"
-                    ></div>
+                        class="grade-horarios">
+                    </div>
 
                 </div>
+
 
                 <!-- HORÁRIO FINAL -->
                 <div id="horario-final" hidden>
@@ -243,6 +259,7 @@
 
                 </div>
 
+
                 <!-- PARTICIPANTE -->
                 <label for="participante-atividade">
                     Nome do participante
@@ -253,6 +270,7 @@
                     id="participante-atividade"
                     placeholder="Nome de quem participará"
                 >
+
 
                 <!-- E-MAIL -->
                 <label for="email-participante">
@@ -265,8 +283,11 @@
                     placeholder="email@exemplo.com"
                 >
 
+
                 <!-- BOTÃO DE CADASTRO -->
-                <button type="submit" id="botao-salvar-atividade">
+                <button
+                    type="submit"
+                    id="botao-salvar-atividade">
                     Salvar atividade
                 </button>
 
@@ -277,6 +298,4 @@
     </div>
 
 </body>
-
 </html>
-```

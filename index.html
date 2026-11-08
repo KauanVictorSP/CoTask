@@ -10,7 +10,7 @@
     <title>CoTask - Sua rotina, seu sistema</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="js/script.js" defer></script>
+    <script src="assets/js/script.js" defer></script>
 </head>
 
 <body>
@@ -19,46 +19,33 @@
     <div class="background-glow glow-two"></div>
     <div class="background-grid"></div>
 
-    <header class="site-header">
-
-    <!-- LOGO CENTRALIZADA -->
+    
+<header class="site-header">
     <a href="index.html" class="brand">
         <img src="../assets/imagens/logo-cotask.png" alt="Logo CoTask">
         <span>CoTask</span>
     </a>
 
-    <!-- BOTÕES DE ACESSO -->
     <nav class="main-nav">
-
         <div id="auth-buttons">
-            <button class="button button-ghost" id="open-login">
-                Entrar
-            </button>
-
-            <button class="button button-primary" id="open-register">
-                Criar conta
-            </button>
+            <button class="button button-ghost" id="open-login" type="button">Entrar</button>
+            <button class="button button-primary" id="open-register" type="button">Criar conta</button>
         </div>
 
-        <!-- ÁREA DO USUÁRIO LOGADO -->
-        <div id="user-area" class="user-area" hidden>
-
-            <a href="pages/rotinas.html" class="button button-outline">
-                Rotinas
+        <div class="user-area" id="user-area" hidden>
+            <a href="pages/rotinas.html" class="button button-ghost" id="botao-rotinas">
+                Minhas rotinas
             </a>
 
-            <button id="logout-button" class="button button-ghost">
+            <button class="button button-ghost" id="logout-button" type="button">
                 Sair
             </button>
-
         </div>
-
     </nav>
 
-    <!-- NOME DO USUÁRIO -->
-    <div id="user-name" class="user-name"></div>
-
+    <span id="user-name" class="user-name" hidden></span>
 </header>
+
 
     <main>
 

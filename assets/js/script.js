@@ -52,6 +52,7 @@ function atualizarCabecalho() {
 
         // Mostrar nome da pessoa logada
         nomeUsuario.textContent = `Olá, ${usuario.nome}!`;
+        nomeUsuario.hidden = false;
 
         // Esconder botões de cadastro e login da apresentação
         botaoHeroCadastro.hidden = true;
@@ -70,8 +71,9 @@ function atualizarCabecalho() {
         // Esconder área do usuário
         areaUsuario.hidden = true;
 
-        // Limpar nome exibido
+        // Limpar e esconder nome
         nomeUsuario.textContent = "";
+        nomeUsuario.hidden = true;
 
         // Mostrar botões da apresentação
         botaoHeroCadastro.hidden = false;

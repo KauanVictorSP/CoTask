@@ -5,7 +5,9 @@
 
 async function buscarFeriados(ano) {
     try {
-        const resposta = await fetch(`https://brasilapi.com.br/api/feriados/v1/${ano}`);
+        const resposta = await fetch(
+            `https://brasilapi.com.br/api/feriados/v1/${ano}`
+        );
 
         if (!resposta.ok) {
             throw new Error("Não foi possível buscar os feriados.");

@@ -1,5 +1,37 @@
 
 // =====================================
+// USUÁRIO LOGADO
+// =====================================
+
+const elementoNomeUsuario = document.getElementById("nome-usuario");
+
+function mostrarUsuarioLogado() {
+    if (!elementoNomeUsuario) return;
+
+    const dadosUsuario = localStorage.getItem("usuarioLogado");
+
+    if (!dadosUsuario) {
+        elementoNomeUsuario.textContent = "Olá!";
+        return;
+    }
+
+    try {
+        const usuario = JSON.parse(dadosUsuario);
+
+        elementoNomeUsuario.textContent = usuario?.nome
+            ? `Olá, ${usuario.nome}!`
+            : "Olá!";
+
+    } catch (erro) {
+        console.error("Erro ao recuperar usuário:", erro);
+        elementoNomeUsuario.textContent = "Olá!";
+    }
+}
+
+mostrarUsuarioLogado();
+
+
+// =====================================
 // CALENDÁRIO
 // =====================================
 
@@ -11,6 +43,7 @@ const botaoProximoMes = document.getElementById("proximo-mes");
 
 let dataAtual = new Date();
 let dataSelecionada = new Date();
+
 
 // =====================================
 // FERIADOS
@@ -24,17 +57,34 @@ async function carregarFeriados(ano) {
         return;
     }
 
-    const resultado = await buscarFeriados(ano);
+    try {
+        // Verifica se a função da API está disponível
+        if (typeof buscarFeriados !== "function") {
+            console.warn("A função buscarFeriados não foi encontrada.");
+            anoFeriadosCarregado = ano;
+            return;
+        }
 
-    if (dataAtual.getFullYear() !== ano) {
-        return;
+        const resultado = await buscarFeriados(ano);
+
+        // Evita atualizar o calendário com dados de outro ano
+        if (dataAtual.getFullYear() !== ano) {
+            return;
+        }
+
+        feriados = Array.isArray(resultado) ? resultado : [];
+        anoFeriadosCarregado = ano;
+
+        mostrarCalendario();
+
+    } catch (erro) {
+        console.error("Erro ao carregar feriados:", erro);
+
+        feriados = [];
+        anoFeriadosCarregado = ano;
     }
-
-    feriados = resultado;
-    anoFeriadosCarregado = ano;
-
-    mostrarCalendario();
 }
+
 
 // =====================================
 // DATA SELECIONADA
@@ -43,6 +93,8 @@ async function carregarFeriados(ano) {
 function atualizarDataSelecionada() {
     const elementoData = document.getElementById("data-selecionada");
 
+    if (!elementoData) return;
+
     elementoData.textContent = dataSelecionada.toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long",
@@ -50,12 +102,15 @@ function atualizarDataSelecionada() {
     });
 }
 
+
 // =====================================
-// EXIBIR INFORMAÇÃO DO FERIADO
+// INFORMAÇÃO DO FERIADO
 // =====================================
 
 function mostrarInformacaoFeriado() {
     const elementoFeriado = document.getElementById("informacao-feriado");
+
+    if (!elementoFeriado) return;
 
     const dataFormatada = [
         dataSelecionada.getFullYear(),
@@ -92,11 +147,21 @@ function mostrarInformacaoFeriado() {
     elementoFeriado.appendChild(mensagem);
 }
 
+
 // =====================================
 // EXIBIR CALENDÁRIO
 // =====================================
 
 function mostrarCalendario() {
+    // Impede que o restante do código quebre
+    // caso algum elemento não exista no HTML.
+    if (!calendario || !tituloMes) {
+        console.error(
+            "Calendário não encontrado. Confira os IDs dias-calendario e mes-atual no HTML."
+        );
+        return;
+    }
+
     const ano = dataAtual.getFullYear();
     const mes = dataAtual.getMonth();
 
@@ -165,24 +230,39 @@ function mostrarCalendario() {
         calendario.appendChild(elementoDia);
     }
 
+    // Carregar feriados sem impedir a exibição do calendário
     carregarFeriados(ano);
 }
+
 
 // =====================================
 // NAVEGAÇÃO ENTRE MESES
 // =====================================
 
-botaoMesAnterior.addEventListener("click", () => {
-    dataAtual.setMonth(dataAtual.getMonth() - 1);
+if (botaoMesAnterior) {
+    botaoMesAnterior.addEventListener("click", () => {
+        dataAtual = new Date(
+            dataAtual.getFullYear(),
+            dataAtual.getMonth() - 1,
+            1
+        );
 
-    mostrarCalendario();
-});
+        mostrarCalendario();
+    });
+}
 
-botaoProximoMes.addEventListener("click", () => {
-    dataAtual.setMonth(dataAtual.getMonth() + 1);
+if (botaoProximoMes) {
+    botaoProximoMes.addEventListener("click", () => {
+        dataAtual = new Date(
+            dataAtual.getFullYear(),
+            dataAtual.getMonth() + 1,
+            1
+        );
 
-    mostrarCalendario();
-});
+        mostrarCalendario();
+    });
+}
+
 
 // Iniciar calendário
 
@@ -206,7 +286,7 @@ const tituloAtividade = document.getElementById("titulo-atividade");
 const descricaoAtividade = document.getElementById("descricao-atividade");
 const horarioAtividade = document.getElementById("horario-atividade");
 
-// Elementos da seleção de horários
+// Seleção de horários
 
 const horasDisponiveis = document.getElementById("horas-disponiveis");
 const selecaoMinutos = document.getElementById("selecao-minutos");
@@ -226,11 +306,14 @@ const emailParticipante = document.getElementById("email-participante");
 
 let atividadeEditandoId = null;
 
+
 // =====================================
 // ABRIR FORMULÁRIO
 // =====================================
 
 function abrirFormulario() {
+    if (!modalAtividade || !formularioAtividade || !dataAtividade) return;
+
     reiniciarSelecaoHorario();
 
     const ano = dataSelecionada.getFullYear();
@@ -242,42 +325,65 @@ function abrirFormulario() {
     modalAtividade.hidden = false;
 }
 
+
 // =====================================
 // FECHAR FORMULÁRIO
 // =====================================
 
 function fecharFormulario() {
+    if (!formularioAtividade || !modalAtividade) return;
+
     formularioAtividade.reset();
 
     reiniciarSelecaoHorario();
 
     atividadeEditandoId = null;
 
-    document.querySelector("#form-atividade h3").textContent = "Nova atividade";
+    const tituloModal = document.querySelector("#form-atividade h3");
+    const botaoSalvar = formularioAtividade.querySelector('[type="submit"]');
 
-    formularioAtividade.querySelector('[type="submit"]').textContent = "Salvar atividade";
+    if (tituloModal) {
+        tituloModal.textContent = "Nova atividade";
+    }
+
+    if (botaoSalvar) {
+        botaoSalvar.textContent = "Salvar atividade";
+    }
 
     modalAtividade.hidden = true;
 }
+
 
 // =====================================
 // EVENTOS DO MODAL
 // =====================================
 
-botaoAdicionarAtividade.addEventListener("click", abrirFormulario);
+if (botaoAdicionarAtividade) {
+    botaoAdicionarAtividade.addEventListener("click", abrirFormulario);
+}
 
-botaoNovaAtividade.addEventListener("click", abrirFormulario);
+if (botaoNovaAtividade) {
+    botaoNovaAtividade.addEventListener("click", abrirFormulario);
+}
 
-botaoFecharModal.addEventListener("click", fecharFormulario);
+if (botaoFecharModal) {
+    botaoFecharModal.addEventListener("click", fecharFormulario);
+}
 
-modalAtividade.addEventListener("click", (evento) => {
-    if (evento.target === modalAtividade) {
-        fecharFormulario();
-    }
-});
+if (modalAtividade) {
+    modalAtividade.addEventListener("click", (evento) => {
+        if (evento.target === modalAtividade) {
+            fecharFormulario();
+        }
+    });
+}
 
 document.addEventListener("keydown", (evento) => {
-    if (evento.key === "Escape" && !modalAtividade.hidden) {
+    if (
+        evento.key === "Escape" &&
+        modalAtividade &&
+        !modalAtividade.hidden
+    ) {
         fecharFormulario();
     }
 });
@@ -289,88 +395,102 @@ document.addEventListener("keydown", (evento) => {
 
 const listaAtividades = document.getElementById("lista-atividades");
 
+
 // =====================================
 // PESQUISA DE ATIVIDADES
 // =====================================
 
-const campoPesquisa = document.createElement("input");
+let campoPesquisa = null;
+let campoFiltro = null;
+let campoOrdenacao = null;
 
-campoPesquisa.type = "search";
-campoPesquisa.id = "pesquisa-atividades";
-campoPesquisa.placeholder = "Pesquisar missão...";
-campoPesquisa.setAttribute("aria-label", "Pesquisar atividades");
+if (listaAtividades && listaAtividades.parentElement) {
+    campoPesquisa = document.createElement("input");
 
-listaAtividades.parentElement.insertBefore(
-    campoPesquisa,
-    listaAtividades
-);
+    campoPesquisa.type = "search";
+    campoPesquisa.id = "pesquisa-atividades";
+    campoPesquisa.placeholder = "Pesquisar missão...";
+    campoPesquisa.setAttribute("aria-label", "Pesquisar atividades");
 
-campoPesquisa.addEventListener("input", () => {
-    mostrarAtividades();
-});
+    listaAtividades.parentElement.insertBefore(
+        campoPesquisa,
+        listaAtividades
+    );
 
-// =====================================
-// FILTRO DE ATIVIDADES
-// =====================================
+    campoPesquisa.addEventListener("input", mostrarAtividades);
 
-const campoFiltro = document.createElement("select");
 
-campoFiltro.id = "filtro-atividades";
+    // =====================================
+    // FILTRO DE ATIVIDADES
+    // =====================================
 
-campoFiltro.innerHTML = `
-    <option value="todas">Todas as missões</option>
-    <option value="pendentes">Pendentes</option>
-    <option value="concluidas">Concluídas</option>
-`;
+    campoFiltro = document.createElement("select");
 
-campoFiltro.setAttribute("aria-label", "Filtrar atividades");
+    campoFiltro.id = "filtro-atividades";
 
-listaAtividades.parentElement.insertBefore(
-    campoFiltro,
-    listaAtividades
-);
+    campoFiltro.innerHTML = `
+        <option value="todas">Todas as missões</option>
+        <option value="pendentes">Pendentes</option>
+        <option value="concluidas">Concluídas</option>
+    `;
 
-campoFiltro.addEventListener("change", () => {
-    mostrarAtividades();
-});
+    campoFiltro.setAttribute("aria-label", "Filtrar atividades");
 
-// =====================================
-// ORDENAÇÃO DE ATIVIDADES
-// =====================================
+    listaAtividades.parentElement.insertBefore(
+        campoFiltro,
+        listaAtividades
+    );
 
-const campoOrdenacao = document.createElement("select");
+    campoFiltro.addEventListener("change", mostrarAtividades);
 
-campoOrdenacao.id = "ordenacao-atividades";
 
-campoOrdenacao.innerHTML = `
-    <option value="crescente">Mais cedo primeiro</option>
-    <option value="decrescente">Mais tarde primeiro</option>
-`;
+    // =====================================
+    // ORDENAÇÃO DE ATIVIDADES
+    // =====================================
 
-campoOrdenacao.setAttribute("aria-label", "Ordenar atividades");
+    campoOrdenacao = document.createElement("select");
 
-listaAtividades.parentElement.insertBefore(
-    campoOrdenacao,
-    listaAtividades
-);
+    campoOrdenacao.id = "ordenacao-atividades";
 
-campoOrdenacao.addEventListener("change", () => {
-    mostrarAtividades();
-});
+    campoOrdenacao.innerHTML = `
+        <option value="crescente">Mais cedo primeiro</option>
+        <option value="decrescente">Mais tarde primeiro</option>
+    `;
+
+    campoOrdenacao.setAttribute("aria-label", "Ordenar atividades");
+
+    listaAtividades.parentElement.insertBefore(
+        campoOrdenacao,
+        listaAtividades
+    );
+
+    campoOrdenacao.addEventListener("change", mostrarAtividades);
+}
+
 
 // =====================================
 // CARREGAR ATIVIDADES
 // =====================================
 
 function carregarAtividades() {
-    return JSON.parse(localStorage.getItem("atividades")) || [];
+    try {
+        return JSON.parse(localStorage.getItem("atividades")) || [];
+    } catch (erro) {
+        console.error("Erro ao carregar atividades:", erro);
+        return [];
+    }
 }
+
 
 // =====================================
 // MOSTRAR ATIVIDADES DA DATA SELECIONADA
 // =====================================
 
 function mostrarAtividades() {
+    if (!listaAtividades || !campoPesquisa || !campoFiltro || !campoOrdenacao) {
+        return;
+    }
+
     const atividades = carregarAtividades();
 
     const dataFormatada = [
@@ -402,7 +522,10 @@ function mostrarAtividades() {
         return mesmaData && correspondePesquisa && correspondeFiltro;
     });
 
+
+    // =====================================
     // ORDENAR POR HORÁRIO
+    // =====================================
 
     atividadesDoDia.sort((atividadeA, atividadeB) => {
         const horarioA = atividadeA.horario || "";
@@ -427,7 +550,10 @@ function mostrarAtividades() {
 
     listaAtividades.innerHTML = "";
 
+
+    // =====================================
     // MENSAGEM QUANDO NÃO EXISTEM ATIVIDADES
+    // =====================================
 
     if (atividadesDoDia.length === 0) {
         const mensagem = document.createElement("p");
@@ -440,7 +566,10 @@ function mostrarAtividades() {
         return;
     }
 
+
+    // =====================================
     // CRIAR CARDS
+    // =====================================
 
     atividadesDoDia.forEach((atividade) => {
         const card = document.createElement("div");
@@ -476,7 +605,10 @@ function mostrarAtividades() {
             ? "CONCLUÍDA"
             : "PENDENTE";
 
+
+        // =====================================
         // BOTÃO CONCLUIR / REABRIR
+        // =====================================
 
         const botaoStatus = document.createElement("button");
 
@@ -506,7 +638,10 @@ function mostrarAtividades() {
             mostrarAtividades();
         });
 
+
+        // =====================================
         // BOTÃO EDITAR
+        // =====================================
 
         const botaoEditar = document.createElement("button");
 
@@ -530,7 +665,10 @@ function mostrarAtividades() {
             modalAtividade.hidden = false;
         });
 
+
+        // =====================================
         // BOTÃO EXCLUIR
+        // =====================================
 
         const botaoExcluir = document.createElement("button");
 
@@ -557,7 +695,10 @@ function mostrarAtividades() {
             mostrarAtividades();
         });
 
+
+        // =====================================
         // ORGANIZAR CARD E BOTÕES
+        // =====================================
 
         const botoesAcao = document.createElement("div");
 
@@ -577,113 +718,131 @@ function mostrarAtividades() {
     });
 }
 
+
 // =====================================
 // CADASTRAR E EDITAR ATIVIDADES
 // =====================================
 
-formularioAtividade.addEventListener("submit", async (evento) => {
-    evento.preventDefault();
+if (formularioAtividade) {
+    formularioAtividade.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
 
-    const atividades = carregarAtividades();
+        const atividades = carregarAtividades();
 
-    const nome = nomeParticipante.value.trim();
-    const email = emailParticipante.value.trim();
+        const nome = nomeParticipante ? nomeParticipante.value.trim() : "";
+        const email = emailParticipante ? emailParticipante.value.trim() : "";
 
-    if ((nome && !email) || (!nome && email)) {
-        alert("Preencha o nome e o e-mail do participante.");
-        return;
-    }
-
-    let novaAtividade = null;
-
-    // EDITAR ATIVIDADE EXISTENTE
-
-    if (atividadeEditandoId !== null) {
-        const atividade = atividades.find((item) => {
-            return item.id === atividadeEditandoId;
-        });
-
-        if (atividade) {
-            atividade.titulo = tituloAtividade.value.trim();
-            atividade.descricao = descricaoAtividade.value.trim();
-            atividade.data = dataAtividade.value;
-            atividade.horario = horarioAtividade.value;
+        if ((nome && !email) || (!nome && email)) {
+            alert("Preencha o nome e o e-mail do participante.");
+            return;
         }
 
-    } else {
+        let novaAtividade = null;
 
-        // CADASTRAR NOVA ATIVIDADE
+        // EDITAR ATIVIDADE EXISTENTE
 
-        novaAtividade = {
-            id: Date.now(),
-            titulo: tituloAtividade.value.trim(),
-            descricao: descricaoAtividade.value.trim(),
-            data: dataAtividade.value,
-            horario: horarioAtividade.value,
-            concluida: false
-        };
+        if (atividadeEditandoId !== null) {
+            const atividade = atividades.find((item) => {
+                return item.id === atividadeEditandoId;
+            });
 
-        atividades.push(novaAtividade);
-    }
+            if (atividade) {
+                atividade.titulo = tituloAtividade.value.trim();
+                atividade.descricao = descricaoAtividade.value.trim();
+                atividade.data = dataAtividade.value;
+                atividade.horario = horarioAtividade.value;
+            }
 
-    // SALVAR NO LOCALSTORAGE
+        } else {
 
-    localStorage.setItem(
-        "atividades",
-        JSON.stringify(atividades)
-    );
+            // CADASTRAR NOVA ATIVIDADE
 
-    fecharFormulario();
-    mostrarAtividades();
+            novaAtividade = {
+                id: Date.now(),
+                titulo: tituloAtividade.value.trim(),
+                descricao: descricaoAtividade.value.trim(),
+                data: dataAtividade.value,
+                horario: horarioAtividade.value,
+                concluida: false
+            };
 
-    // ENVIAR CONVITE POR E-MAIL
+            atividades.push(novaAtividade);
+        }
 
-    if (novaAtividade && nome && email) {
-        try {
-            const dataFormatada = new Date(
-                `${novaAtividade.data}T00:00:00`
-            ).toLocaleDateString("pt-BR");
 
-            const nomeResponsavel =
-                document.getElementById("nome-usuario").textContent
-                    .replace("Olá!", "")
-                    .trim() || "Equipe CoTask";
+        // SALVAR NO LOCALSTORAGE
 
-            await emailjs.send(
-                "service_isy8zlo",
-                "template_3ydhm7y",
-                {
-                    nome_participante: nome,
-                    email_participante: email,
-                    titulo_atividade: novaAtividade.titulo,
-                    descricao_atividade: novaAtividade.descricao || "Sem descrição.",
-                    data_atividade: dataFormatada,
-                    horario_atividade: novaAtividade.horario || "Não definido",
-                    nome_responsavel: nomeResponsavel
-                },
-                {
-                    publicKey: "0apAdxcUloDLms0i_"
+        localStorage.setItem(
+            "atividades",
+            JSON.stringify(atividades)
+        );
+
+        fecharFormulario();
+        mostrarAtividades();
+
+
+        // =====================================
+        // ENVIAR CONVITE POR E-MAIL
+        // =====================================
+
+        if (novaAtividade && nome && email) {
+            try {
+                const dataFormatada = new Date(
+                    `${novaAtividade.data}T00:00:00`
+                ).toLocaleDateString("pt-BR");
+
+                let nomeResponsavel = "Equipe CoTask";
+
+                try {
+                    const usuario = JSON.parse(
+                        localStorage.getItem("usuarioLogado")
+                    );
+
+                    nomeResponsavel = usuario?.nome || "Equipe CoTask";
+
+                } catch (erro) {
+                    console.error("Erro ao recuperar responsável:", erro);
                 }
-            );
 
-            alert("Atividade cadastrada e convite enviado com sucesso!");
+                await emailjs.send(
+                    "service_isy8zlo",
+                    "template_3ydhm7y",
+                    {
+                        nome_participante: nome,
+                        email_participante: email,
+                        titulo_atividade: novaAtividade.titulo,
+                        descricao_atividade: novaAtividade.descricao || "Sem descrição.",
+                        data_atividade: dataFormatada,
+                        horario_atividade: novaAtividade.horario || "Não definido",
+                        nome_responsavel: nomeResponsavel
+                    },
+                    {
+                        publicKey: "0apAdxcUloDLms0i_"
+                    }
+                );
 
-        } catch (erro) {
-            console.error("Erro ao enviar convite:", erro);
+                alert("Atividade cadastrada e convite enviado com sucesso!");
 
-            alert("Atividade cadastrada, mas não foi possível enviar o convite. Verifique o console.");
+            } catch (erro) {
+                console.error("Erro ao enviar convite:", erro);
+
+                alert("Atividade cadastrada, mas não foi possível enviar o convite. Verifique o console.");
+            }
         }
-    }
-});
+    });
+}
 
 
 // =====================================
 // SELEÇÃO DE HORÁRIOS
 // =====================================
 
+
 // GERAR AS 24 OPÇÕES DE HORAS
 
 function gerarHoras() {
+    if (!horasDisponiveis) return;
+
     horasDisponiveis.innerHTML = "";
 
     for (let hora = 0; hora < 24; hora++) {
@@ -711,9 +870,12 @@ function gerarHoras() {
     }
 }
 
+
 // GERAR MINUTOS DE 5 EM 5
 
 function gerarMinutos(hora) {
+    if (!minutosDisponiveis) return;
+
     minutosDisponiveis.innerHTML = "";
 
     for (let minuto = 0; minuto < 60; minuto += 5) {
@@ -740,38 +902,66 @@ function gerarMinutos(hora) {
     }
 }
 
+
 // VOLTAR PARA ESCOLHER OUTRA HORA
 
-botaoAlterarHora.addEventListener("click", () => {
-    selecaoMinutos.hidden = true;
-    horasDisponiveis.hidden = false;
+if (botaoAlterarHora) {
+    botaoAlterarHora.addEventListener("click", () => {
+        selecaoMinutos.hidden = true;
+        horasDisponiveis.hidden = false;
 
-    horarioAtividade.value = "";
-});
+        horarioAtividade.value = "";
+    });
+}
+
 
 // ALTERAR O HORÁRIO COMPLETO
 
-botaoAlterarHorario.addEventListener("click", () => {
-    horarioFinal.hidden = true;
-    selecaoMinutos.hidden = true;
-    horasDisponiveis.hidden = false;
+if (botaoAlterarHorario) {
+    botaoAlterarHorario.addEventListener("click", () => {
+        horarioFinal.hidden = true;
+        selecaoMinutos.hidden = true;
+        horasDisponiveis.hidden = false;
 
-    horarioAtividade.value = "";
-});
-
-// REINICIAR SELEÇÃO
-
-function reiniciarSelecaoHorario() {
-    horarioAtividade.value = "";
-    horaSelecionada.value = "";
-    horarioExibido.value = "";
-
-    horasDisponiveis.hidden = false;
-    selecaoMinutos.hidden = true;
-    horarioFinal.hidden = true;
+        horarioAtividade.value = "";
+    });
 }
 
+
+// =====================================
+// REINICIAR SELEÇÃO
+// =====================================
+
+function reiniciarSelecaoHorario() {
+    if (!horarioAtividade) return;
+
+    horarioAtividade.value = "";
+
+    if (horaSelecionada) {
+        horaSelecionada.value = "";
+    }
+
+    if (horarioExibido) {
+        horarioExibido.value = "";
+    }
+
+    if (horasDisponiveis) {
+        horasDisponiveis.hidden = false;
+    }
+
+    if (selecaoMinutos) {
+        selecaoMinutos.hidden = true;
+    }
+
+    if (horarioFinal) {
+        horarioFinal.hidden = true;
+    }
+}
+
+
+// =====================================
 // MOSTRAR HORÁRIO JÁ SALVO AO EDITAR
+// =====================================
 
 function mostrarHorarioEditado(horario) {
     if (!horario) {
@@ -782,18 +972,36 @@ function mostrarHorarioEditado(horario) {
     const [hora, minuto] = horario.split(":");
 
     horarioAtividade.value = horario;
-    horaSelecionada.value = hora;
-    horarioExibido.value = horario;
 
-    horasDisponiveis.hidden = true;
-    selecaoMinutos.hidden = true;
-    horarioFinal.hidden = false;
+    if (horaSelecionada) {
+        horaSelecionada.value = hora;
+    }
+
+    if (horarioExibido) {
+        horarioExibido.value = horario;
+    }
+
+    if (horasDisponiveis) {
+        horasDisponiveis.hidden = true;
+    }
+
+    if (selecaoMinutos) {
+        selecaoMinutos.hidden = true;
+    }
+
+    if (horarioFinal) {
+        horarioFinal.hidden = false;
+    }
 }
 
+
+// =====================================
 // INICIAR SELEÇÃO
+// =====================================
 
 gerarHoras();
 reiniciarSelecaoHorario();
+
 
 // =====================================
 // INICIAR EXIBIÇÃO DAS ATIVIDADES

@@ -168,15 +168,22 @@ body::before {
     content: "";
     position: absolute;
     bottom: -1px;
-    left: 50%;
+    left: 15%;
 
-    width: 120px;
-    height: 1px;
+    width: 70%;
+    height: 2px;
 
-    transform: translateX(-50%);
+    background: linear-gradient(
+        110deg,
+        #19E6F2,
+        #8B72FF 55%,
+        #EC36C9
+    );
 
-    background: var(--cyan);
-    box-shadow: 0 0 12px var(--cyan);
+    box-shadow:
+        0 0 10px #19E6F2,
+        0 0 20px #A855F7,
+        0 0 30px rgba(236, 54, 201, 0.4);
 }
 
 .brand {
@@ -199,8 +206,8 @@ body::before {
 }
 
 .brand img {
-    width: 58px;
-    height: 58px;
+    width: 70px;
+    height: 70px;
     object-fit: contain;
 }
 
@@ -1287,12 +1294,12 @@ main {
     }
 }
 
+
 /* =====================================
    ACESSIBILIDADE
 ===================================== */
 
 @media (prefers-reduced-motion: reduce) {
-
     *,
     *::before,
     *::after {
@@ -1301,26 +1308,6 @@ main {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
     }
-}
-
-.botao-rotinas {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 18px;
-    border: 1px solid var(--cyan);
-    border-radius: 8px;
-    color: var(--cyan);
-    text-decoration: none;
-    font-weight: bold;
-    transition: 0.3s ease;
-}
-
-.botao-rotinas:hover {
-    background: var(--cyan);
-    color: var(--bg);
-    box-shadow: 0 0 15px var(--cyan);
-    transform: translateY(-2px);
 }
 
 /* =====================================
@@ -1332,48 +1319,17 @@ main {
     margin-bottom: 48px;
 }
 
-/* NOME DO USUÁRIO */
-
-.user-name {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 50%;
-    transform: translateX(-50%);
-
-    display: block;
-    width: max-content;
-    max-width: 90%;
-
-    font-family: var(--font-title);
-    font-size: 1rem;
-    font-weight: bold;
-    letter-spacing: 0.08em;
-    text-align: center;
-
-    background: linear-gradient(
-        90deg,
-        var(--cyan),
-        #A7A0FF,
-        var(--pink)
-    );
-
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-
-    filter: drop-shadow(0 0 8px rgba(25, 230, 242, 0.3));
+.brand {
+    grid-column: 2;
+    justify-self: center;
 }
-
-/* NAVEGAÇÃO */
 
 .main-nav {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    grid-column: 3;
+    justify-self: end;
+    position: static;
+    transform: none;
 }
-
-/* BOTÕES LADO A LADO */
 
 .user-area {
     display: flex;
@@ -1382,63 +1338,106 @@ main {
     gap: 10px;
 }
 
-/* BOTÃO ROTINAS */
+/* =====================================
+   NOME DO USUÁRIO
+===================================== */
 
-.user-area .button-outline {
-    border-color: var(--cyan);
+.site-header > .user-name {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: max-content;
+    max-width: 90%;
+
+    font-family: var(--font-title);
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-align: center;
+    white-space: nowrap;
+
+    background: linear-gradient(
+        100deg,
+        var(--cyan),
+        #A7A0FF 55%,
+        var(--pink)
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0 0 8px rgba(25, 230, 242, 0.3));
+    z-index: 5;
+}
+
+/* =====================================
+   BOTÃO MINHAS ROTINAS
+===================================== */
+
+#botao-rotinas {
+    background: transparent;
+    border: 1px solid rgba(25, 230, 242, 0.5);
     color: var(--cyan);
 }
 
-.user-area .button-outline:hover {
-    background: rgba(25, 230, 242, 0.1);
-    box-shadow: 0 0 15px rgba(25, 230, 242, 0.2);
+#botao-rotinas:hover {
+    background: rgba(25, 230, 242, 0.08);
+    border-color: var(--cyan);
+    color: var(--cyan);
+    box-shadow: 0 0 15px rgba(25, 230, 242, 0.25);
+    transform: translateY(-2px);
 }
 
-/* BOTÃO SAIR */
+/* =====================================
+   BOTÃO SAIR
+===================================== */
 
 #logout-button {
+    background: transparent;
     border: 1px solid rgba(236, 54, 201, 0.5);
     color: var(--pink);
-    background: rgba(236, 54, 201, 0.05);
 }
 
 #logout-button:hover {
     border-color: var(--pink);
     color: var(--text);
-    background: rgba(236, 54, 201, 0.12);
+    background: rgba(236, 54, 201, 0.08);
     box-shadow: 0 0 15px rgba(236, 54, 201, 0.2);
 }
 
-/* RESPONSIVIDADE */
+/* =====================================
+   RESPONSIVIDADE
+===================================== */
 
 @media (max-width: 760px) {
-    .main-nav .button {
-        padding: 9px 11px;
-        font-size: 0.75rem;
+    .site-header .user-name {
+        font-size: 0.9rem;
     }
 
     .user-area {
         gap: 6px;
     }
-
-    .user-name {
-        font-size: 0.9rem;
-    }
 }
 
 @media (max-width: 420px) {
     .site-header {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 12px;
+        padding: 15px 0;
         margin-bottom: 48px;
     }
 
+    .brand,
     .main-nav {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
+        grid-column: 1;
+        justify-self: center;
     }
 
-    .user-name {
+    .site-header .user-name {
         font-size: 0.8rem;
     }
 }
