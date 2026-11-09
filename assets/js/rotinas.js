@@ -1036,3 +1036,17 @@ reiniciarSelecaoHorario();
 // =====================================
 
 mostrarAtividades();
+
+// =====================================
+// SAIR DA CONTA
+// =====================================
+
+const botaoSair = document.getElementById("botao-sair");
+
+if (botaoSair) {
+    botaoSair.addEventListener("click", () => {
+        localStorage.removeItem("usuarioLogado");
+
+        window.location.href = "../index.html";
+    });
+}
