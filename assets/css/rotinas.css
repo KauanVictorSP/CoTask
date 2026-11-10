@@ -1,4 +1,12 @@
 /* Componentes exclusivos de Minhas Rotinas. Tokens e controles em style.css. */
+.page-routines .ambient-glow { opacity: .4; animation-duration: 48s; }
+.page-routines .ambient-particles { background: radial-gradient(circle at 3% 35%, #B57CFF 1px, transparent 2px), radial-gradient(circle at 97% 62%, #B57CFF 1px, transparent 2px); animation-duration: 36s; }
+.page-routines::before { opacity: .35; }
+.page-routines .welcome-mark::after { animation: none; }
+.page-routines .calendario, .page-routines .atividades { box-shadow: var(--shadow-raised), 0 0 36px rgba(106, 43, 234, .06); }
+@media (hover: hover) and (pointer: fine) {
+    .missao-card:hover { transform: translateY(-2px); }
+}
 .conteudo { padding-block: var(--space-6) var(--space-8); }
 .barra-rotinas { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); margin-bottom: var(--space-5); }
 .barra-rotinas > button { flex-shrink: 0; }
@@ -41,7 +49,7 @@
 #filtro-atividades, #ordenacao-atividades { display: inline-block; width: calc(50% - 8px); margin-bottom: var(--space-5); }
 #ordenacao-atividades { margin-left: 12px; }
 #lista-atividades { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--space-4); }
-.missao-card { position: relative; transition: border-color var(--transition), box-shadow var(--transition); min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding: var(--space-5); background: var(--surface-sheen), var(--surface-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); border-top: 2px solid var(--color-primary); }
+.missao-card { position: relative; transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-3); padding: var(--space-5); background: var(--surface-sheen), var(--surface-input); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); border-top: 2px solid var(--color-primary); }
 .missao-card:hover, .missao-card:focus-within { border-color: var(--border-interactive); box-shadow: var(--shadow-card); }
 .missao-card.concluida { border-top-color: var(--color-success); }
 .missao-cabecalho { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); width: 100%; }

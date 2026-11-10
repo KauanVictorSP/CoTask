@@ -40,6 +40,10 @@
     --text-sm: .875rem; --text-base: 1rem; --text-lg: 1.25rem;
     --text-title: clamp(1.75rem, 3vw, 2.5rem);
     --transition: 160ms ease;
+    --motion-orbit: 60s;
+    --motion-float: 7s;
+    --motion-ambient: 32s;
+    --motion-pulse: 6s;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -95,11 +99,11 @@ main, .site-footer { width: min(1180px, calc(100% - 48px)); margin-inline: auto;
 .hero-description { color: var(--text-muted); max-width: 540px; margin-block: var(--space-5) var(--space-6); font-size: 1.125rem; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 .hero-note { margin-top: var(--space-6); font-size: var(--text-sm); color: var(--text-muted); }
-.hero-visual { position: relative; min-height: 400px; display: grid; place-items: center; }
+.hero-visual { position: relative; isolation: isolate; min-height: 400px; display: grid; place-items: center; pointer-events: none; }
 .hero-logo { width: 65%; max-width: 290px; filter: grayscale(1) sepia(1) hue-rotate(215deg) saturate(3) drop-shadow(0 0 32px var(--glow)); }
 .visual-ring { position: absolute; width: 88%; aspect-ratio: 1; border: 1px solid var(--border-subtle); border-radius: 50%; pointer-events: none; }
 .ring-inner { width: 72%; border-style: dashed; }
-.logo-halo { position: absolute; inset: 15%; background: var(--glow); filter: blur(50px); border-radius: 50%; }
+.logo-halo { position: absolute; inset: 20%; z-index: -1; background: radial-gradient(ellipse, rgba(181, 124, 255, .3), rgba(106, 43, 234, .16) 40%, transparent 70%); border-radius: 50%; pointer-events: none; animation: ultraviolet-pulse var(--motion-pulse) ease-in-out infinite; }
 .floating-chip { position: absolute; display: flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: var(--surface-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-pill); font-size: .75rem; letter-spacing: .08em; }
 .chip-top { top: 8%; right: 0; } .chip-bottom { bottom: 8%; left: 0; }
 .chip-icon { color: var(--color-accent); } .chip-dot, .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--color-accent); }
@@ -135,9 +139,36 @@ main, .site-footer { width: min(1180px, calc(100% - 48px)); margin-inline: auto;
 .form-feedback:empty { display: none; }
 .switch-auth { margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
 body.modal-open { overflow: hidden; }
+/* Decoração isolada: apenas transform/opacity nas animações contínuas. */
+.ambient-scene { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+.ambient-glow { position: absolute; inset: -12%; background: radial-gradient(ellipse at 78% 24%, rgba(106, 43, 234, .18), transparent 38%), radial-gradient(ellipse at 15% 72%, rgba(45, 14, 134, .24), transparent 36%); animation: ambient-drift var(--motion-ambient) ease-in-out infinite alternate; }
+.ambient-particles { position: absolute; inset: 0; opacity: .6; background: radial-gradient(circle at 8% 22%, #B57CFF 1px, transparent 2px), radial-gradient(circle at 24% 64%, #B57CFF 1px, transparent 2px), radial-gradient(circle at 43% 16%, #EBDDFF 1px, transparent 2px), radial-gradient(circle at 62% 80%, #B57CFF 1px, transparent 2px), radial-gradient(circle at 84% 38%, #EBDDFF 1.5px, transparent 2.5px), radial-gradient(circle at 93% 72%, #B57CFF 1px, transparent 2px); animation: particle-drift 24s ease-in-out infinite alternate; }
+.ring-outer { border-top-color: var(--color-accent); border-right-color: rgba(106, 43, 234, .4); animation: orbit-turn var(--motion-orbit) linear infinite; }
+.ring-inner { animation: orbit-turn 42s linear infinite reverse; }
+.visual-ring::after { content: ''; position: absolute; top: 14%; left: 14%; width: 5px; height: 5px; border-radius: 50%; background: var(--color-accent); box-shadow: 0 0 12px var(--color-primary); }
+.floating-chip { animation: chip-float var(--motion-float) ease-in-out infinite; box-shadow: 0 8px 24px rgba(45, 14, 134, .18), inset 0 1px rgba(235, 221, 255, .05); }
+.chip-bottom { animation-duration: 9s; animation-delay: -3s; }
+.status-dot, .chip-dot { box-shadow: 0 0 10px var(--color-primary); }
+.welcome-mark { position: relative; }
+.welcome-mark::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--color-accent); border-radius: inherit; opacity: .15; pointer-events: none; animation: ultraviolet-pulse var(--motion-pulse) ease-in-out infinite; }
+.about-card, .feature-card { transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition); }
+.nav-active { position: relative; box-shadow: none; transition: border-color var(--transition), box-shadow var(--transition); }
+.nav-active::after { content: ''; position: absolute; bottom: 0; left: 14%; right: 14%; height: 2px; background: var(--gradient-primary); transform: scaleX(.8); transition: transform var(--transition); pointer-events: none; }
+.nav-active:hover::after, .nav-active:focus-visible::after { transform: scaleX(1); }
+.about-section, .feature-section { border-image: linear-gradient(90deg, var(--color-primary), var(--border-subtle) 35%, transparent) 1; }
+@media (hover: hover) and (pointer: fine) {
+    .about-card:hover, .feature-card:hover { transform: translateY(-3px); border-color: var(--border-interactive); box-shadow: var(--shadow-raised), 0 8px 28px var(--glow); }
+}
+@keyframes orbit-turn { to { transform: rotate(360deg); } }
+@keyframes chip-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes ultraviolet-pulse { 0%, 100% { opacity: .45; } 50% { opacity: 1; } }
+@keyframes ambient-drift { from { transform: translate(-2%, 0) scale(1); } to { transform: translate(3%, 4%) scale(1.06); } }
+@keyframes particle-drift { from { transform: translateY(12px); opacity: .35; } to { transform: translateY(-18px); opacity: .65; } }
 @keyframes modal-enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 900px) { .hero { gap: var(--space-5); } .feature-strip { grid-template-columns: 1fr; } }
 @media (max-width: 680px) {
+    .ambient-particles { background: radial-gradient(circle at 8% 22%, #B57CFF 1px, transparent 2px), radial-gradient(circle at 84% 38%, #EBDDFF 1px, transparent 2px), radial-gradient(circle at 93% 72%, #B57CFF 1px, transparent 2px); }
+    .ambient-glow { animation-duration: 40s; }
     main, .site-footer { width: calc(100% - 32px); }
     .site-header, .topo { padding: var(--space-4); }
     .brand, .logo { font-size: 1.5rem; }
