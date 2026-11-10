@@ -39,6 +39,7 @@ function mostrarNotificacao(mensagem, tipo = "sucesso") {
 
     notificacao.classList.add("notificacao-cotask", tipo);
     notificacao.textContent = mensagem;
+    notificacao.setAttribute('role', tipo === 'erro' ? 'alert' : 'status');
 
     document.body.appendChild(notificacao);
 
@@ -210,6 +211,9 @@ function mostrarCalendario() {
         calendario.appendChild(espaco);
     }
 
+    const hoje = new Date();
+    const datasComAtividades = new Set(carregarAtividades().map(atividade => atividade.data));
+
     // Criar os dias do mês
 
     for (let dia = 1; dia <= ultimoDia; dia++) {
@@ -229,6 +233,15 @@ function mostrarCalendario() {
             return item.date === dataDoDia;
         });
 
+        const ehHoje = dia === hoje.getDate() && mes === hoje.getMonth() && ano === hoje.getFullYear();
+        elementoDia.classList.toggle('hoje', ehHoje);
+        if (ehHoje) elementoDia.setAttribute('aria-current', 'date');
+        elementoDia.classList.toggle('com-atividades', datasComAtividades.has(dataDoDia));
+        elementoDia.dataset.data = dataDoDia;
+        elementoDia.setAttribute('aria-label', new Date(ano, mes, dia).toLocaleDateString('pt-BR', { dateStyle: 'full' })
+            + (ehHoje ? ', hoje' : '') + (feriado ? ', feriado: ' + feriado.name : '')
+            + (datasComAtividades.has(dataDoDia) ? ', com atividades' : ''));
+        elementoDia.setAttribute('aria-pressed', 'false');
         if (feriado) {
             elementoDia.classList.add("feriado");
             elementoDia.title = feriado.name;
@@ -240,12 +253,14 @@ function mostrarCalendario() {
             ano === dataSelecionada.getFullYear()
         ) {
             elementoDia.classList.add("selecionado");
+            elementoDia.setAttribute('aria-pressed', 'true');
         }
 
         elementoDia.addEventListener("click", () => {
             dataSelecionada = new Date(ano, mes, dia);
 
             mostrarCalendario();
+            calendario.querySelector('[aria-pressed=true]')?.focus();
             mostrarAtividades();
         });
 
@@ -514,6 +529,12 @@ function mostrarAtividades() {
     }
 
     const atividades = carregarAtividades();
+    calendario.querySelectorAll('[data-data]').forEach(botao => {
+        const temAtividades = atividades.some(atividade => atividade.data === botao.dataset.data);
+        botao.classList.toggle('com-atividades', temAtividades);
+        const rotulo = botao.getAttribute('aria-label').replace(', com atividades', '');
+        botao.setAttribute('aria-label', rotulo + (temAtividades ? ', com atividades' : ''));
+    });
 
     const dataFormatada = [
         dataSelecionada.getFullYear(),
@@ -616,6 +637,8 @@ function mostrarAtividades() {
 
         const horario = document.createElement("span");
         horario.textContent = atividade.horario || "Sem horário definido";
+        horario.classList.add('missao-horario');
+        adicionarIcone(horario, 'clock');
 
         // Status
 
@@ -730,10 +753,22 @@ function mostrarAtividades() {
         botoesAcao.appendChild(botaoEditar);
         botoesAcao.appendChild(botaoExcluir);
 
+        const cabecalho = document.createElement('div');
+        cabecalho.classList.add('missao-cabecalho');
+        const data = document.createElement('time');
+        data.classList.add('missao-data');
+        data.dateTime = atividade.data;
+        data.textContent = new Date(`${atividade.data}T00:00:00`).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+        adicionarIcone(status, atividade.concluida ? 'check' : 'pending');
+        adicionarIcone(botaoStatus, atividade.concluida ? 'reopen' : 'check');
+        adicionarIcone(botaoEditar, 'edit');
+        adicionarIcone(botaoExcluir, 'trash');
+        cabecalho.append(status, data);
+        card.appendChild(cabecalho);
         card.appendChild(titulo);
         card.appendChild(descricao);
         card.appendChild(horario);
-        card.appendChild(status);
+
         card.appendChild(botoesAcao);
 
         listaAtividades.appendChild(card);
@@ -750,6 +785,7 @@ if (formularioAtividade) {
         evento.preventDefault();
 
         const atividades = carregarAtividades();
+
 
         const nome = nomeParticipante ? nomeParticipante.value.trim() : "";
         const email = emailParticipante ? emailParticipante.value.trim() : "";
@@ -1050,3 +1086,4 @@ if (botaoSair) {
         window.location.href = "../index.html";
     });
 }
+configurarModalAcessivel(modalAtividade, fecharFormulario, () => !modalAtividade.hidden, botaoAdicionarAtividade);

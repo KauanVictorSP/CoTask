@@ -53,6 +53,7 @@ function atualizarCabecalho() {
         // Mostrar nome da pessoa logada
         nomeUsuario.textContent = `Olá, ${usuario.nome}!`;
         nomeUsuario.hidden = false;
+        document.getElementById('boas-vindas').hidden = false;
 
         // Esconder botões de cadastro e login da apresentação
         botaoHeroCadastro.hidden = true;
@@ -74,6 +75,7 @@ function atualizarCabecalho() {
         // Limpar e esconder nome
         nomeUsuario.textContent = "";
         nomeUsuario.hidden = true;
+        document.getElementById('boas-vindas').hidden = true;
 
         // Mostrar botões da apresentação
         botaoHeroCadastro.hidden = false;
@@ -116,6 +118,8 @@ function abrirModal(painel) {
 
     painelCadastro.hidden = painel !== "cadastro";
     painelLogin.hidden = painel !== "login";
+    modal.querySelector('[role="dialog"]').setAttribute('aria-labelledby', painel === 'login' ? 'login-title' : 'modal-title');
+    if (modal.contains(document.activeElement)) (painel === 'login' ? painelLogin : painelCadastro).querySelector('input').focus();
 }
 
 function fecharModal() {
@@ -291,6 +295,7 @@ formCadastro.addEventListener("submit", (evento) => {
 
     document.getElementById("login-feedback").textContent =
         "Cadastro realizado! Agora entre na sua conta.";
+    document.getElementById('login-feedback').classList.add('sucesso');
 
     abrirModal("login");
 
@@ -324,6 +329,7 @@ formLogin.addEventListener("submit", (evento) => {
 
     if (!usuarioEncontrado) {
 
+        feedback.classList.remove('sucesso');
         feedback.textContent = "E-mail ou senha incorretos.";
         return;
     }
@@ -345,3 +351,5 @@ formLogin.addEventListener("submit", (evento) => {
     window.location.href = "pages/rotinas.html";
 
 });
+
+configurarModalAcessivel(modal, fecharModal, () => modal.classList.contains('ativo'), botaoAbrirLogin);

@@ -20,6 +20,7 @@
         defer>
     </script>
 
+    <script src="../assets/js/ui.js" defer></script>
     <script src="../assets/js/rotinas.js" defer></script>
 </head>
 
@@ -33,38 +34,51 @@
             <span>CoTask</span>
         </a>
 
-        <div class="usuario">
-            <span id="nome-usuario">Olá!</span>
-            <button id="botao-sair" type="button">Sair</button>
-        </div>
+        <nav class="usuario" aria-label="Navegação principal">
+            <a href="rotinas.html" class="nav-active" aria-current="page" data-icon="calendar">Minhas rotinas</a>
 
+            <button id="botao-sair" type="button" data-icon="logout">Sair</button>
+        </nav>
     </header>
 
+    <section class="boas-vindas" aria-labelledby="nome-usuario">
+        <span class="welcome-mark" aria-hidden="true">✦</span>
+        <h2 id="nome-usuario">Olá!</h2>
+        <p>Organize suas atividades e transforme seus planos em conquistas.</p>
+    </section>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="conteudo">
 
         <!-- ÁREA PRINCIPAL -->
         <section class="area-rotinas">
+            <div class="barra-rotinas">
+                <div class="titulo-pagina">
+                    <span class="section-kicker">PLANEJE. ORGANIZE. REALIZE.</span>
+                    <h1>Seu espaço de foco</h1>
+                    <p>Selecione uma data e dê espaço ao que importa.</p>
+                </div>
 
+                <button id="botao-adicionar-atividade" type="button" data-icon="plus">Adicionar atividade</button>
+            </div>
 
             <!-- CALENDÁRIO -->
-            <section class="calendario">
+            <section class="calendario" aria-labelledby="mes-atual">
+                <div class="painel-kicker"><span data-icon="calendar">Seu calendário</span><span class="painel-hint">Um dia de cada vez</span></div>
 
                 <div class="navegacao-calendario">
 
-                    <button id="mes-anterior" type="button">
-                        &lt;
+                    <button id="mes-anterior" type="button" aria-label="Mês anterior" data-icon="chevron-left">
+
                     </button>
 
-                    <h2 id="mes-atual"></h2>
+                    <h2 id="mes-atual" aria-live="polite"></h2>
 
-                    <button id="proximo-mes" type="button">
-                        &gt;
+                    <button id="proximo-mes" type="button" aria-label="Próximo mês" data-icon="chevron-right">
+
                     </button>
 
                 </div>
-
 
                 <div class="dias-semana">
                     <span>Dom</span>
@@ -76,11 +90,11 @@
                     <span>Sáb</span>
                 </div>
 
-
                 <div id="dias-calendario"></div>
 
-
                 <div class="legenda-calendario">
+                    <div class="legenda-item"><span class="legenda-cor dia-hoje"></span><span>Hoje (sublinhado)</span></div>
+                    <div class="legenda-item"><span class="legenda-cor dia-atividade"></span><span>Com atividades</span></div>
 
                     <div class="legenda-item">
                         <span class="legenda-cor dia-normal"></span>
@@ -101,7 +115,6 @@
 
             </section>
 
-
             <!-- ATIVIDADES -->
             <section class="atividades">
 
@@ -110,20 +123,15 @@
                     <div class="informacoes-data">
 
                         <h2>
-                            Atividades de
-                            <span id="data-selecionada"></span>
+                            Suas atividades
+                            <span id="data-selecionada" class="subtitulo-data"></span>
                         </h2>
 
                         <div id="informacao-feriado"></div>
 
                     </div>
 
-                    <button id="botao-adicionar-atividade" type="button">
-                        + Adicionar atividade
-                    </button>
-
                 </div>
-
 
                 <div id="lista-atividades">
 
@@ -139,24 +147,21 @@
 
     </main>
 
-
     <!-- MODAL DE NOVA ATIVIDADE -->
     <div id="modal-atividade" class="modal-atividade" hidden>
 
-        <div class="conteudo-modal">
+        <div class="conteudo-modal" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-atividade" tabindex="-1">
 
             <button
                 type="button"
                 id="fechar-modal"
-                class="fechar-modal">
+                class="fechar-modal" aria-label="Fechar atividade">
                 &times;
             </button>
 
-
             <form id="form-atividade" class="form-atividade">
 
-                <h3>Nova atividade</h3>
-
+                <h3 id="titulo-modal-atividade">Nova atividade</h3>
 
                 <!-- TÍTULO -->
                 <label for="titulo-atividade">
@@ -170,7 +175,6 @@
                     required
                 >
 
-
                 <!-- DESCRIÇÃO -->
                 <label for="descricao-atividade">
                     Descrição
@@ -182,7 +186,6 @@
                     rows="3"
                 ></textarea>
 
-
                 <!-- DATA -->
                 <label for="data-atividade">
                     Data da atividade
@@ -193,7 +196,6 @@
                     id="data-atividade"
                     required
                 >
-
 
                 <!-- SELEÇÃO DE HORÁRIO -->
                 <label>Horário</label>
@@ -208,7 +210,6 @@
                     id="horas-disponiveis"
                     class="grade-horarios">
                 </div>
-
 
                 <!-- SELEÇÃO DOS MINUTOS -->
                 <div id="selecao-minutos" hidden>
@@ -229,7 +230,6 @@
 
                     </div>
 
-
                     <label>Selecione os minutos</label>
 
                     <div
@@ -238,7 +238,6 @@
                     </div>
 
                 </div>
-
 
                 <!-- HORÁRIO FINAL -->
                 <div id="horario-final" hidden>
@@ -259,7 +258,6 @@
 
                 </div>
 
-
                 <!-- PARTICIPANTE -->
                 <label for="participante-atividade">
                     Nome do participante
@@ -271,7 +269,6 @@
                     placeholder="Nome de quem participará"
                 >
 
-
                 <!-- E-MAIL -->
                 <label for="email-participante">
                     E-mail do participante
@@ -282,7 +279,6 @@
                     id="email-participante"
                     placeholder="email@exemplo.com"
                 >
-
 
                 <!-- BOTÃO DE CADASTRO -->
                 <button

@@ -5,19 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0B0B14">
+    <meta name="theme-color" content="#0B0524">
 
     <title>CoTask - Sua rotina, seu sistema</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/ui.js" defer></script>
     <script src="assets/js/script.js" defer></script>
 </head>
 
 <body>
 
-    <div class="background-glow glow-one"></div>
-    <div class="background-glow glow-two"></div>
-    <div class="background-grid"></div>
+
+
+
 
     
 <header class="site-header">
@@ -33,18 +34,24 @@
         </div>
 
         <div class="user-area" id="user-area" hidden>
-            <a href="pages/rotinas.html" class="button button-ghost" id="botao-rotinas">
+            <a href="pages/rotinas.html" class="button button-ghost" id="botao-rotinas" data-icon="calendar">
                 Minhas rotinas
             </a>
 
-            <button class="button button-ghost" id="logout-button" type="button">
+            <button class="button button-ghost" id="logout-button" data-icon="logout" type="button">
                 Sair
             </button>
         </div>
     </nav>
 
-    <span id="user-name" class="user-name" hidden></span>
+
 </header>
+
+    <section class="boas-vindas" id="boas-vindas" aria-labelledby="user-name" hidden>
+        <span class="welcome-mark" aria-hidden="true">✦</span>
+        <h2 id="user-name" class="user-name" hidden></h2>
+        <p>Organize suas atividades e transforme seus planos em conquistas.</p>
+    </section>
 
 
     <main>
@@ -122,8 +129,8 @@
                     SISTEMA PRONTO
                 </div>
 
-                <div class="floating-orbit orbit-one"></div>
-                <div class="floating-orbit orbit-two"></div>
+
+
 
             </div>
 
