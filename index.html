@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/ui.js" defer></script>
+    <script src="assets/js/passwords.js" defer></script>
     <script src="assets/js/script.js" defer></script>
 </head>
 
@@ -367,27 +368,47 @@
 
                     <label for="register-password">Senha</label>
 
-                    <input
+                    <div class="password-field">
+                        <input
                         id="register-password"
                         name="password"
                         type="password"
                         placeholder="Mínimo de 8 caracteres"
                         minlength="8"
                         autocomplete="new-password"
-                        required>
+                        aria-describedby="password-guidance" required>
+                        <button class="password-toggle" type="button" data-password-toggle="register-password" data-password-label="senha" aria-controls="register-password" aria-label="Mostrar senha" aria-pressed="false" data-icon="eye"></button>
+                    </div>
+                    <div id="password-guidance" class="password-guidance">
+                        <p id="password-strength" role="status" aria-live="polite">Força estimada: aguardando senha</p>
+                        <div class="password-meter" aria-hidden="true"><span></span></div>
+                        <p class="password-hint">Estimativa visual, não uma garantia de segurança. Prefira uma senha longa e exclusiva.</p>
+                        <ul class="password-requirements">
+                            <li data-password-rule="length"><span class="requirement-icon" aria-hidden="true"></span><span class="requirement-state sr-only">Pendente: </span>Pelo menos 8 caracteres</li>
+                            <li data-password-rule="upper"><span class="requirement-icon" aria-hidden="true"></span><span class="requirement-state sr-only">Pendente: </span>Pelo menos uma letra maiúscula</li>
+                            <li data-password-rule="lower"><span class="requirement-icon" aria-hidden="true"></span><span class="requirement-state sr-only">Pendente: </span>Pelo menos uma letra minúscula</li>
+                            <li data-password-rule="number"><span class="requirement-icon" aria-hidden="true"></span><span class="requirement-state sr-only">Pendente: </span>Pelo menos um número</li>
+                            <li data-password-rule="special"><span class="requirement-icon" aria-hidden="true"></span><span class="requirement-state sr-only">Pendente: </span>Pelo menos um caractere especial</li>
+                        </ul>
+                        <p id="password-complete" role="status"></p>
+                    </div>
 
                     <label for="register-confirm-password">
                         Confirmar senha
                     </label>
 
-                    <input
+                    <div class="password-field">
+                        <input
                         id="register-confirm-password"
                         name="confirm-password"
                         type="password"
                         placeholder="Digite sua senha novamente"
-                        minlength="6"
+                        minlength="8"
                         autocomplete="new-password"
-                        required>
+                        aria-describedby="password-match" required>
+                        <button class="password-toggle" type="button" data-password-toggle="register-confirm-password" data-password-label="confirmação de senha" aria-controls="register-confirm-password" aria-label="Mostrar confirmação de senha" aria-pressed="false" data-icon="eye"></button>
+                    </div>
+                    <p id="password-match" class="password-match" role="status" aria-live="polite"></p>
 
                     <button
                         class="button button-primary submit-button"
@@ -451,13 +472,17 @@
 
                     <label for="login-password">Senha</label>
 
-                    <input
+                    <div class="password-field">
+                        <input
                         id="login-password"
                         name="password"
                         type="password"
                         placeholder="Sua senha"
                         autocomplete="current-password"
                         required>
+                        <button class="password-toggle" type="button" data-password-toggle="login-password" data-password-label="senha" aria-controls="login-password" aria-label="Mostrar senha" aria-pressed="false" data-icon="eye"></button>
+                    </div>
+
 
                     <button
                         class="button button-primary submit-button"

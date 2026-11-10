@@ -216,44 +216,11 @@ formCadastro.addEventListener("submit", (evento) => {
         return;
     }
 
-    // Verificar se a senha tem pelo menos 8 caracteres
-
-    if (senha.length < 8) {
-
-        feedback.textContent = "A senha precisa ter pelo menos 8 caracteres.";
+    const requisitos = avaliarRequisitosSenha(senha);
+    if (!Object.values(requisitos).every(Boolean)) {
+        feedback.textContent = "A senha precisa ter pelo menos 8 caracteres, uma letra maiúscula, uma minúscula, um número e um caractere especial.";
         return;
     }
-
-    // Verificar se existe um caractere especial
-
-    const possuiCaractereEspecial = /[!@#$%^&*(),.?":{}|<>_\-+=]/.test(senha);
-
-    if (!possuiCaractereEspecial) {
-
-        feedback.textContent = "A senha precisa ter pelo menos um caractere especial.";
-        return;
-    }
-
-    // Verificar se existe uma letra maiúscula
-
-    const possuiMaiuscula = /[A-Z]/.test(senha);
-
-    if (!possuiMaiuscula) {
-
-        feedback.textContent = "A senha precisa ter pelo menos uma letra maiúscula.";
-        return;
-    }
-
-    // Verificar se existe um número
-
-    const possuiNumero = /[0-9]/.test(senha);
-
-    if (!possuiNumero) {
-
-        feedback.textContent = "A senha precisa ter pelo menos um número.";
-        return;
-    }
-
     // Buscar usuários cadastrados
 
     let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];

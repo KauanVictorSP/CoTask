@@ -139,6 +139,28 @@ main, .site-footer { width: min(1180px, calc(100% - 48px)); margin-inline: auto;
 .form-feedback:empty { display: none; }
 .switch-auth { margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-sm); }
 body.modal-open { overflow: hidden; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.password-field { position: relative; }
+.password-field input:not([type='hidden']) { padding-right: 56px; }
+.password-field input::-ms-reveal { display: none; }
+.password-toggle { position: absolute; right: 3px; top: 3px; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; border-color: transparent; }
+.password-toggle[aria-pressed='true'] { color: var(--color-lavender); background: var(--glow); }
+.password-toggle:focus-visible { outline-offset: -3px; }
+.password-guidance { padding: var(--space-4); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); background: var(--surface-input); font-size: var(--text-sm); }
+.password-hint { color: var(--text-muted); margin-top: var(--space-2); font-size: .75rem; }
+.password-meter { height: 5px; margin-top: var(--space-2); border-radius: var(--radius-pill); background: var(--border-subtle); overflow: hidden; }
+.password-meter span { display: block; height: 100%; background: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--transition), background-color var(--transition); }
+.password-meter[data-level='1'] span { transform: scaleX(.333); }
+.password-meter[data-level='2'] span { transform: scaleX(.666); background: var(--color-lavender); }
+.password-meter[data-level='3'] span { transform: scaleX(1); background: var(--gradient-primary); }
+.password-requirements { display: grid; gap: var(--space-2); list-style: none; margin: var(--space-3) 0 0; padding: 0; color: var(--text-muted); }
+.password-requirements li { display: flex; align-items: flex-start; gap: var(--space-2); }
+.requirement-icon { display: inline-flex; flex: 0 0 18px; margin-top: 2px; }
+.password-requirements .is-met, #password-complete, .password-match[data-state='match'] { color: var(--color-lavender); }
+#password-complete:not(:empty) { margin-top: var(--space-3); }
+.password-match { font-size: var(--text-sm); color: var(--color-lavender); }
+.password-match:empty { display: none; }
+.password-match[data-state='mismatch'] { border-left: 2px solid var(--color-accent); padding-left: var(--space-2); }
 /* Decoração isolada: apenas transform/opacity nas animações contínuas. */
 .ambient-scene { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
 .ambient-glow { position: absolute; inset: -12%; background: radial-gradient(ellipse at 78% 24%, rgba(106, 43, 234, .18), transparent 38%), radial-gradient(ellipse at 15% 72%, rgba(45, 14, 134, .24), transparent 36%); animation: ambient-drift var(--motion-ambient) ease-in-out infinite alternate; }
